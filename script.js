@@ -77,7 +77,7 @@ submitCode.addEventListener('click', function() {
     const code = accessCodeInput.value.trim();
 
     if (code === '260328081011') {
-        window.location.href = 'https://wmp666.github.io/game.html';
+        window.location.href = 'game/askQuestion.html';
     } else {
         errorMsg.classList.add('show');
         accessCodeInput.value = '';
