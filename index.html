@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="cn">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wmp666的个人主页</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>123</h1>
-<p>qwegbuc</p>
+<!-- 左上角标题 -->
+<header class="site-title">wmp666的个人主页</header>
+
+<!-- 左下角菜单 -->
+<nav class="menu-container">
+    <button class="menu-toggle">菜单</button>
+    <div class="menu-items hidden">
+        <a href="#" data-page="home">个人主页</a>
+        <a href="#" data-page="projects">小玩意儿</a>
+        <a href="#" id="secret-link">???</a>
+    </div>
+</nav>
+
+<!-- 主要内容区域 -->
+<main id="content">
+    <!-- 默认显示个人介绍 -->
+    <section class="intro active">
+        <img src="avatar.png" alt="头像" class="avatar">
+        <h1>无名牌</h1>
+        <p class="tagline">很高兴认识你！交个朋友吧</p>
+    </section>
+
+    <!-- 小玩意儿页面 -->
+    <section class="projects hidden">
+        <!-- 项目内容 -->
+    </section>
+</main>
+
+<!-- 密码输入模态框 -->
+<div id="password-modal" class="modal hidden">
+    <div class="modal-content">
+        <h3>请输入访问码</h3>
+        <input type="password" id="access-code" placeholder="输入访问码">
+        <button id="submit-code">确认</button>
+        <p id="error-msg" class="error hidden">访问码错误</p>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
