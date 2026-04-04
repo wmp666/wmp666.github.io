@@ -1,42 +1,183 @@
-// 菜单切换
-document.querySelector('.menu-toggle').addEventListener('click', function() {
-    document.querySelector('.menu-items').classList.toggle('hidden');
+const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+const closeSidebar = document.getElementById('close-sidebar');
+
+menuToggle.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
 });
 
-// 页面切换
-document.querySelectorAll('[data-page]').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const page = this.getAttribute('data-page');
+closeSidebar.addEventListener('click', function() {
+    sidebar.classList.remove('active');
+});
 
-        // 隐藏所有页面
-        document.querySelectorAll('main section').forEach(section => {
-            section.classList.add('hidden');
+document.addEventListener('click', function(event) {
+    if (!sidebar.contains(event.target) &&
+        !menuToggle.contains(event.target) &&
+        sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+    }
+});
+
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('main section');
+
+navItems.forEach(item => {
+    if (item.id !== 'secret-link') {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            navItems.forEach(nav => nav.classList.remove('active'));
+            sections.forEach(section => section.classList.remove('active'));
+
+            this.classList.add('active');
+            const page = this.getAttribute('data-page');
+
+            if (page === 'home') {
+                document.querySelector('.intro-section').classList.add('active');
+            } else if (page === 'projects') {
+                document.querySelector('.projects-section').classList.add('active');
+            }
+
+            sidebar.classList.remove('active');
         });
-
-        // 显示目标页面
-        document.querySelector(`.${page}`).classList.remove('hidden');
-
-        // 关闭菜单
-        document.querySelector('.menu-items').classList.add('hidden');
-    });
+    }
 });
 
-// ??? 功能
-document.getElementById('secret-link').addEventListener('click', function(e) {
+const secretLink = document.getElementById('secret-link');
+const passwordModal = document.getElementById('password-modal');
+const closeModal = document.querySelector('.close-modal');
+const submitCode = document.getElementById('submit-code');
+const accessCodeInput = document.getElementById('access-code');
+const errorMsg = document.getElementById('error-msg');
+
+secretLink.addEventListener('click', function(e) {
     e.preventDefault();
-    document.getElementById('password-modal').classList.remove('hidden');
+    passwordModal.classList.add('active');
+    sidebar.classList.remove('active');
+    setTimeout(() => {
+        accessCodeInput.focus();
+    }, 100);
 });
 
-// 密码验证
-document.getElementById('submit-code').addEventListener('click', function() {
-    const code = document.getElementById('access-code').value;
-    const errorMsg = document.getElementById('error-msg');
+closeModal.addEventListener('click', function() {
+    passwordModal.classList.remove('active');
+    errorMsg.classList.remove('show');
+    accessCodeInput.value = '';
+});
+
+passwordModal.addEventListener('click', function(e) {
+    if (e.target === passwordModal) {
+        passwordModal.classList.remove('active');
+        errorMsg.classList.remove('show');
+        accessCodeInput.value = '';
+    }
+});
+
+submitCode.addEventListener('click', function() {
+    const code = accessCodeInput.value.trim();
 
     if (code === '260328081011') {
         window.location.href = 'https://wmp666.github.io/askQuestion';
     } else {
-        errorMsg.classList.remove('hidden');
-        setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+        errorMsg.classList.add('show');
+        accessCodeInput.value = '';
+        accessCodeInput.focus();
+
+        setTimeout(() => {
+            errorMsg.classList.remove('show');
+        }, 3000);
     }
+});
+
+accessCodeInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        submitCode.click();
+    }
+});
+
+// 邮箱按钮点击显示邮箱
+const emailIcon = document.querySelector('.social-icon .fa-envelope');
+if (emailIcon) {
+    const emailButton = emailIcon.parentElement;
+    let emailTooltip = null;
+
+    emailButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // 移除已存在的提示框
+        if (emailTooltip) {
+            emailTooltip.remove();
+            emailTooltip = null;
+            return;
+        }
+
+        // 创建邮箱提示框
+        emailTooltip = document.createElement('div');
+        emailTooltip.className = 'email-tooltip';
+        emailTooltip.innerHTML = `
+            <span class="email-text">2134868121@qq.com</span>
+            <button class="copy-email" title="复制邮箱">
+                <i class="fas fa-copy"></i>
+            </button>
+        `;
+
+        // 定位提示框
+        const rect = emailButton.getBoundingClientRect();
+        emailTooltip.style.position = 'fixed';
+        emailTooltip.style.left = rect.left + (rect.width / 2) - 120 + 'px';
+        emailTooltip.style.top = rect.top - 60 + 'px';
+        emailTooltip.style.zIndex = '9999';
+
+        document.body.appendChild(emailTooltip);
+
+        // 添加动画
+        setTimeout(() => {
+            emailTooltip.classList.add('show');
+        }, 10);
+
+        // 复制功能
+        const copyBtn = emailTooltip.querySelector('.copy-email');
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText('2134868121@qq.com').then(() => {
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHTML;
+                }, 1500);
+            });
+        });
+
+        // 3秒后自动关闭
+        setTimeout(() => {
+            if (emailTooltip) {
+                emailTooltip.classList.remove('show');
+                setTimeout(() => {
+                    if (emailTooltip) {
+                        emailTooltip.remove();
+                        emailTooltip = null;
+                    }
+                }, 300);
+            }
+        }, 3000);
+    });
+}
+
+// 变色效果 - 名字和标语的颜色渐变动画
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+
+        const nameElement = document.querySelector('.name');
+        const taglineElement = document.querySelector('.tagline');
+
+        if (nameElement) {
+            nameElement.textContent = '无名牌';
+        }
+        if (taglineElement) {
+            taglineElement.textContent = '很高兴认识你！交个朋友吧';
+        }
+    }, 100);
 });
