@@ -170,14 +170,14 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.body.style.opacity = '1';
 
-        const nameElement = document.querySelector('.name');
+        /*const nameElement = document.querySelector('.gradientText');
         const taglineElement = document.querySelector('.tagline');
-
-        if (nameElement) {
+*/
+        /*if (nameElement) {
             nameElement.textContent = '无名牌';
         }
         if (taglineElement) {
             taglineElement.textContent = '很高兴认识你！交个朋友吧';
-        }
+        }*/
     }, 100);
 });

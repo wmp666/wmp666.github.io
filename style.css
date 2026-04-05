@@ -347,7 +347,7 @@ main {
     to { transform: rotate(360deg); }
 }
 
-.name {
+.gradientText {
     font-size: 2.8rem;
     margin-bottom: 15px;
     background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark), var(--blue-light), var(--primary-blue));
@@ -560,10 +560,15 @@ main {
 }
 
 .project-card h3 {
-    color: var(--primary-blue);
+    background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark), var(--blue-light), var(--primary-blue));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 12px;
     font-size: 1.4rem;
     font-weight: 600;
+    animation: gradientShift 5s ease infinite;
 }
 
 .project-card p {
@@ -804,7 +809,7 @@ main {
         margin: 0 15px;
     }
 
-    .name {
+    .gradientText {
         font-size: 2.2rem;
     }
 
