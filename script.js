@@ -188,32 +188,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (taglineElement) {
             taglineElement.textContent = '很高兴认识你！交个朋友吧';
         }*/
+        
+        // 检查是否是作者生日
+        isAuthorBir();
     }, 100);
 });
 
-// 获取服务器时间
-async function getServerTime() {
-    try {
-        // 方法1: 通过 HTTP 请求头获取服务器时间（推荐）
-        const response = await fetch(window.location.href, {
-            method: 'HEAD',
-            cache: 'no-cache'
-        });
-        
-        const dateHeader = response.headers.get('date');
-        if (dateHeader) {
-            return new Date(dateHeader);
-        }
-        
-        // 方法2: 如果方法1失败，使用世界时间API
-        const apiResponse = await fetch('https://worldtimeapi.org/api/ip');
-        const data = await apiResponse.json();
-        return new Date(data.datetime);
-        
-    } catch (error) {
-        console.error('获取服务器时间失败:', error);
-        // 降级方案：返回本地时间
-        return new Date();
+async function isAuthorBir(){
+    const introduction = document.getElementById("introduction");
+    const name = document.getElementById("name");
+    if (!await checkDate(9, 17, true)){
+        name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
+        introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
+    }else{
+        introduction.innerHTML = `<p class="tagline" id="introduction">很高兴认识你！交个朋友吧</p>`;
+
     }
 }
 
