@@ -81,6 +81,12 @@ submitCode.addEventListener('click', async function() {
         window.location.href = 'game/askQuestion.html';
     } else if(code === '21090223'){
         window.location.href = 'birthday/xhc.html';
+    } else if(code === '25081011'){
+        window.location.href = 'birthday/lcl.html';
+    } else if(code === '15090129'){
+        window.location.href = 'birthday/yht.html';
+    } else if(code === '24090624'){
+        window.location.href = 'birthday/xtq.html';
     } else {
         errorMsg.classList.add('show');
         accessCodeInput.value = '';

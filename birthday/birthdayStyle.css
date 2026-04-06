@@ -24,6 +24,11 @@
     animation: bounce 2s ease infinite;
 }
 
+.birthday-icon img {
+    max-width: 150px;
+    height: auto;
+}
+
 @keyframes bounce {
     0%, 100% { 
         transform: translateY(0); 

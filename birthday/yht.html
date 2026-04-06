@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <link rel="shortcut icon" href="../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="birthdayStyle.css">
+</head>
+<body>
+<div class="birthday-container">
+    <div class="birthday-card">
+        <div class="birthday-icon">🎂</div>
+
+        <!-- 仅在目标日期显示的内容 -->
+        <div id="special-content" class="hidden-message">
+            <h1 class="gradientText">生日快乐</h1>
+            <div class="birthday-text-card">
+                <p>
+                    正在加急施工。。。
+                </p>
+            </div>
+        </div>
+
+        <!-- 非目标日期显示的内容 -->
+        <div id="normal-message" class="hidden-message">
+            <h1 class="gradientText">回去吧</h1>
+            <p class="tagline" style="font-size: 1.2rem; margin-top: 20px;">现在仍未到达那个时候</p>
+        </div>
+
+        <div class="date-check" id="edit-date">
+            <i class="fas fa-calendar-alt"></i> 编写时间：2026年4月6日
+        </div>
+
+        <a href="../index.html" class="back-home-link">
+            <i class="fas fa-arrow-left"></i> 返回主页
+        </a>
+    </div>
+</div>
+
+<script src="lunarCalendar.js"></script>
+<script src="checkDate.js"></script>
+<script>
+    // 页面加载时检查日期（目标日期：2月23日，公历）
+    checkDate(1, 29, true);
+</script>
+</body>
+</html>

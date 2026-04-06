@@ -12,7 +12,7 @@
 <body>
 <div class="birthday-container">
     <div class="birthday-card">
-        <div class="birthday-icon">🎂</div>
+        <div class="birthday-icon"><img src="hengheng.png" alt="哼哼"></div>
 
         <!-- 仅在目标日期显示的内容 -->
         <div id="special-content" class="hidden-message">
@@ -101,10 +101,11 @@
     </div>
 </div>
 
+<script src="lunarCalendar.js"></script>
 <script src="checkDate.js"></script>
 <script>
-    // 页面加载时检查日期
-    checkDate(2, 23);
+    // 页面加载时检查日期（目标日期：2月23日，公历）
+    checkDate(2, 23, false);
 </script>
 </body>
 </html>
