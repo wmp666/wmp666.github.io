@@ -500,7 +500,12 @@ main {
 }
 
 .section-header p {
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    align-items: center;
     color: var(--text-light);
+    margin-bottom: 10px;
     font-size: 1.15rem;
 }
 
@@ -577,6 +582,22 @@ main {
     margin-bottom: 20px;
 }
 
+.project-verLine{
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    align-items: center;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.project-verLine:hover {
+    color: var(--primary-blue);
+    gap: 12px;
+}
+
+
 .project-link {
     display: inline-flex;
     align-items: center;
@@ -598,7 +619,7 @@ main {
 
 
 .project-warning {
-    display: inline-flex;
+    display: block;
     align-items: center;
     gap: 8px;
     color: #FFFFFF;
@@ -609,6 +630,7 @@ main {
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.3);
     border: 2px solid rgb(255 177 62);
+    margin-bottom: 15px;
 }
 
 .project-warning:hover {
