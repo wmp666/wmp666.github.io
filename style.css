@@ -783,7 +783,6 @@ main {
     color: var(--error);
     text-align: center;
     font-size: 0.95rem;
-    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;

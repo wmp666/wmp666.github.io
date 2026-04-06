@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <link rel="shortcut icon" href="../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="birthdayStyle.css">
+</head>
+<body>
+<div class="birthday-container">
+    <div class="birthday-card">
+        <div class="birthday-icon">🎂</div>
+
+        <!-- 仅在目标日期显示的内容 -->
+        <div id="special-content" class="hidden-message">
+            <h1 class="gradientText">
+                以此献给跨越群星的开拓者<br>
+                以此献给游历诸国的旅行者
+            </h1>
+            <div class="birthday-text-card">
+                <p>
+                    我不过是你漫长开拓之路上偶然相遇之人<br>
+                    在这个特殊的时间<br>
+                    就让我以同行之人的身份向你祝福吧<br>
+                    <br>
+                    在过去，我们一同<br>
+                    见证，大守护者为贝洛伯格而误入歧途<br>
+                    看到，丰饶在仙舟罗浮肆虐<br>
+                    在睡梦，看到步入错误轨道的星期日<br>
+                    与银河中飘荡时，在翁法洛斯你查觉逐火之旅不过是一个谎言<br>
+                    回到领航员的故乡——二相乐园，寻找......<br>
+                    <br>
+                    而今天，我回顾过去的旅程<br>
+                    希望你能如新的大守护者一样，继续向前<br>
+                    希望你能如阻止丰饶肆虐时一样，战胜困难<br>
+                    希望你能如阻止星期日时一样，明白梦终将醒来<br>
+                    希望你能如击败铁幕时一样，冲破一切困境<br>
+                    希望你能如...<br>
+                </p>
+            </div>
+            <div class="birthday-text-card">
+                <p>
+                    作为见证者，我却没法参与你这次的旅程<br>
+                    但我将它们记录于此<br>
+                    <br>
+                    在蒙德，你看到被深渊污染的四风守护<br>
+                    在璃月，你看到被当中刺杀的契约之神<br>
+                    在稻妻，你看到被夺走愿望的稻妻人民<br>
+                    在须弥，你看到被子民囚禁的智慧之神<br>
+                    在纳塔，你看到被深渊攻击的战争之国<br>
+                    在挪德卡莱，你看到被世界排斥的三月女神<br>
+                    在至东，...<br>
+                    <br>
+                    当你从未因此而驻足<br>
+                    愿你，如在看到被深渊污染的四风守护时<br>
+                    义无反顾的上前帮忙<br>
+                    愿你，如在看到被当中刺杀的契约之神时<br>
+                    沉着冷静的探查真相<br>
+                    愿你，如在看到被夺走愿望的稻妻人民时<br>
+                    直面真凶，夺回愿望<br>
+                    愿你，如在看到被子民囚禁的智慧之神时<br>
+                    保持理智，追求真理<br>
+                    愿你，如在看到被深渊攻击的战争之国时<br>
+                    积极参与，解决危机<br>
+                    愿你，如在看到渴望回家的三月女神时<br>
+                    不被花言巧语欺骗，为她寻找真正的答案<br>
+                    愿你，如在看到...一样<br>
+                    <br>
+                </p>
+            </div>
+            <div class="birthday-text-card">
+                <p>
+                    该再度启程了，开拓者<br>
+                    该去往下一个国家了，旅行者<br>
+                    你已于此驻足过久<br>
+                    <br>
+                    旅途仍未结束<br>
+                    愿未来的旅途更加精彩<br>
+                    愿我们能再度相遇<br>
+                    愿我们的下一次能同行<br>
+                </p>
+            </div>
+        </div>
+
+        <!-- 非目标日期显示的内容 -->
+        <div id="normal-message" class="hidden-message">
+            <h1 class="gradientText">我们终将重逢<br>但不是现在</h1>
+            <p class="tagline" style="font-size: 1.2rem; margin-top: 20px;">请跟随时间的指引,回去吧</p>
+        </div>
+
+        <div class="date-check" id="edit-date">
+            <i class="fas fa-calendar-alt"></i> 编写时间：2026年4月6日
+        </div>
+
+        <a href="../index.html" class="back-home-link">
+            <i class="fas fa-arrow-left"></i> 返回主页
+        </a>
+    </div>
+</div>
+
+<script src="checkDate.js"></script>
+<script>
+    // 页面加载时检查日期
+    checkDate(2, 23);
+</script>
+</body>
+</html>

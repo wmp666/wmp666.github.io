@@ -1,0 +1,105 @@
+/* 生日页面样式 */
+.birthday-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.birthday-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 60px 50px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 15px 40px var(--shadow);
+    border: 2px solid var(--border-color);
+    animation: fadeInUp 0.8s ease;
+}
+
+.birthday-icon {
+    font-size: 4rem;
+    margin-bottom: 30px;
+    animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { 
+        transform: translateY(0); 
+    }
+    50% { 
+        transform: translateY(-20px); 
+    }
+}
+
+.hidden-message {
+    display: none;
+}
+
+.hidden-message.show {
+    display: block;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.birthday-text-card {
+    display: grid;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 60px 50px;
+    text-align: center;
+    width: 100%;
+    color: var(--blue-light);
+    border: 2px solid var(--blue-light);
+    margin-bottom: 40px;
+}
+
+.birthday-text-card p{
+    color: var(--text-light);
+    margin-bottom: 35px;
+    font-weight: 400;
+    animation: taglineColor 6s ease-in-out infinite;
+    font-size: 1.3rem;
+    margin-top: 20px;
+}
+
+.date-check {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-top: 30px;
+    padding: 15px;
+    background: var(--background);
+    border-radius: 10px;
+}
+
+.back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.back-home-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+    background: linear-gradient(135deg, var(--blue-dark), var(--primary-blue));
+}

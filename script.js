@@ -73,11 +73,14 @@ passwordModal.addEventListener('click', function(e) {
     }
 });
 
-submitCode.addEventListener('click', function() {
+submitCode.addEventListener('click', async function() {
     const code = accessCodeInput.value.trim();
+
 
     if (code === '260328081011') {
         window.location.href = 'game/askQuestion.html';
+    } else if(code === '21090223'){
+        window.location.href = 'birthday/xhc.html';
     } else {
         errorMsg.classList.add('show');
         accessCodeInput.value = '';
@@ -181,3 +184,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }*/
     }, 100);
 });
+
+// 获取服务器时间
+async function getServerTime() {
+    try {
+        // 方法1: 通过 HTTP 请求头获取服务器时间（推荐）
+        const response = await fetch(window.location.href, {
+            method: 'HEAD',
+            cache: 'no-cache'
+        });
+        
+        const dateHeader = response.headers.get('date');
+        if (dateHeader) {
+            return new Date(dateHeader);
+        }
+        
+        // 方法2: 如果方法1失败，使用世界时间API
+        const apiResponse = await fetch('https://worldtimeapi.org/api/ip');
+        const data = await apiResponse.json();
+        return new Date(data.datetime);
+        
+    } catch (error) {
+        console.error('获取服务器时间失败:', error);
+        // 降级方案：返回本地时间
+        return new Date();
+    }
+}
+
