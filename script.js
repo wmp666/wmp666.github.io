@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function isAuthorBir(){
     const introduction = document.getElementById("introduction");
     const name = document.getElementById("name");
-    if (!await checkDate(9, 17, true)){
+    if (await checkDate(9, 17, true)){
         name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
         introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
     }else{
