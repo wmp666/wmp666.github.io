@@ -24,13 +24,25 @@ const sections = document.querySelectorAll('main section');
 navItems.forEach(item => {
     if (item.id !== 'secret-link') {
         item.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            const page = this.getAttribute('data-page');
+            
+            // 如果链接包含URL参数或者是外部链接，允许默认跳转行为
+            if (href && (href.includes('?') || href.includes('showImage.html'))) {
+                return; // 不阻止默认行为，让链接正常跳转
+            }
+            
+            // 如果是gallery且没有href，也允许跳转
+            if (page === 'gallery' && href === 'showImage.html') {
+                return;
+            }
+            
             e.preventDefault();
 
             navItems.forEach(nav => nav.classList.remove('active'));
             sections.forEach(section => section.classList.remove('active'));
 
             this.classList.add('active');
-            const page = this.getAttribute('data-page');
 
             if (page === 'home') {
                 document.querySelector('.intro-section').classList.add('active');
@@ -191,6 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 检查是否是作者生日
         isAuthorBir();
+        
+        // 处理URL参数，显示对应页面
+        handlePageNavigation();
     }, 100);
 });
 
@@ -229,6 +244,50 @@ function toggleLinks(button) {
         });
         button.classList.add('expanded');
         toggleText.textContent = '收起';
+    }
+}
+
+// 处理URL参数导航
+function handlePageNavigation() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
+    
+    if (!page) return;
+    
+    // 隐藏所有section
+    const sections = document.querySelectorAll('main section');
+    sections.forEach(section => section.classList.remove('active'));
+    
+    // 移除所有nav-item的active状态
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(nav => nav.classList.remove('active'));
+    
+    // 根据参数显示对应页面
+    if (page === 'home') {
+        const homeSection = document.querySelector('.intro-section');
+        if (homeSection) {
+            homeSection.classList.add('active');
+            const homeNav = document.querySelector('.nav-item[data-page="home"]');
+            if (homeNav) homeNav.classList.add('active');
+        }
+    } else if (page === 'projects') {
+        const projectsSection = document.querySelector('.projects-section');
+        if (projectsSection) {
+            projectsSection.classList.add('active');
+            const projectsNav = document.querySelector('.nav-item[data-page="projects"]');
+            if (projectsNav) projectsNav.classList.add('active');
+        }
+    } else if (page === 'secret') {
+        // 触发密码模态框
+        const secretLink = document.getElementById('secret-link');
+        if (secretLink) {
+            secretLink.click();
+        }
+    }
+    
+    // 清除URL参数，避免刷新时重复触发
+    if (page) {
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 }
 
