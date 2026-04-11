@@ -206,3 +206,29 @@ async function isAuthorBir(){
     }
 }
 
+// 折叠/展开链接组功能
+function toggleLinks(button) {
+    const card = button.closest('.project-card');
+    const collapsibleGroups = card.querySelectorAll('.project-links-group.collapsible');
+    const toggleText = button.querySelector('.toggle-text');
+    
+    // 检查当前状态
+    const isExpanded = button.classList.contains('expanded');
+    
+    if (isExpanded) {
+        // 收起所有可折叠的链接组
+        collapsibleGroups.forEach(group => {
+            group.classList.remove('show');
+        });
+        button.classList.remove('expanded');
+        toggleText.textContent = '查看更多';
+    } else {
+        // 展开所有可折叠的链接组
+        collapsibleGroups.forEach(group => {
+            group.classList.add('show');
+        });
+        button.classList.add('expanded');
+        toggleText.textContent = '收起';
+    }
+}
+

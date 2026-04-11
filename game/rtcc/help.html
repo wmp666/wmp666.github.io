@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闰土刺虫 玩法说明</title>
+    <link rel="shortcut icon" href="../../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../changelogStyle.css">
+    <style>
+        .help-header p {
+            font-style: italic;
+            color: var(--text-light);
+        }
+        .version-note {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-blue);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .version-note h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .help-section {
+            margin-bottom: 35px;
+        }
+        .help-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 700;
+        }
+        .help-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+        .help-section p, .help-section li {
+            color: var(--text-color);
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .help-section ul, .help-section ol {
+            padding-left: 25px;
+        }
+        .help-section li {
+            margin-bottom: 8px;
+        }
+        .help-section .note {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 3px solid var(--primary-blue);
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .help-section .warning {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 3px solid #ff9800;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .key {
+            display: inline-block;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+<aside id="sidebar" class="sidebar">
+    <nav class="sidebar-nav">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-bars"></i> 菜单</h3>
+            <button class="close-sidebar" id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-list">
+            <li><a href="updateLog.html" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>更新日志</span>
+            </a></li>
+            <li><a href="../../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>返回主页</span>
+            </a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>© 2026-现在 wmp666</p>
+        </div>
+    </nav>
+</aside>
+
+<button class="menu-toggle" id="menu-toggle">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+</button>
+
+<div class="changelog-container">
+    <div class="changelog-header help-header">
+        <h1><i class="fas fa-book"></i> 玩法说明</h1>
+        <p>ZN-1.9.2</p>
+    </div>
+
+    <div class="version-note">
+        <h3><i class="fas fa-info-circle"></i> 版本说明</h3>
+        <p>1. 适用于部分过渡版，和所有其他版本</p>
+        <p>2. 下列图片为HTML版"闰土刺虫"1.23.05(ZN-1.8.3.05P)的截图（图片内容可能与新版有冲突）</p>
+        <p>3. 由于内容更新迅速，玩法文档的内容可能只适用于最新版！</p>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-list"></i> 菜单</h2>
+        <p>左上角为当前版本，右上角为当前页面名称，下方是作者B站主页链接</p>
+        <ol>
+            <li>按下 <span class="key">按钮</span>，开始游戏</li>
+            <li>按下 <span class="key">按钮</span>，获取帮助</li>
+            <li>在可以点击 <span class="key">按钮</span> 来查看更多作者信息</li>
+            <li>按下 <span class="key">按钮</span>，可以查看鸣谢名单</li>
+            <li>按下 <span class="key">按钮</span>，退出游戏</li>
+            <li>你可以在电脑上点击 <span class="key">复制</span>，来复制链接（除Scratch版）</li>
+        </ol>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-gamepad"></i> 游戏页面</h2>
+        <p>点击左上角 <span class="key">按钮</span> 可以返回菜单，左下角为角色数据，右上角为当前页面名称</p>
+        <div class="note">
+            <p><i class="fas fa-heart"></i> 当游戏开始且分数在10以上时，每过一段时间血量加1，直到为满血</p>
+        </div>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-question-circle"></i> 游戏玩法说明</h2>
+        <p>点击 <span class="key">按钮</span> 会显示游戏基本玩法，了解后可以将指针从中划出方框以隐藏显示</p>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-user"></i> 作者详细信息展示</h2>
+        <p>"作者信息"（ZN-1.3.1以上）</p>
+        <p>"鸣谢名单"</p>
+        <p>按下 <span class="key">按钮</span>，显示此方框，你可以看见更详细的作者信息</p>
+        <p>按下 <span class="key">按钮</span>，显示此方框，你可以看见鸣谢内容(说不定你也在上面)</p>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-crosshairs"></i> 游戏玩法</h2>
+        <h3><i class="fas fa-desktop"></i> （游戏页面）</h3>
+        <ol>
+            <li>在此页面可以根据"游戏玩法说明"页面的提示游玩</li>
+            <li>回血系统
+                <ul>
+                    <li>分数处于11~50，每按一次 <span class="key">[Q]</span> 加1滴血，扣5点分数</li>
+                    <li>分数处于51以上，每按一次 <span class="key">[Q]</span> 加2滴血，扣15点分数</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-expand-arrows-alt"></i> 拓展玩法</h2>
+        <ol>
+            <li>在6:00到19:00之间，背景会切换到"白天"</li>
+            <li>在此时间外，背景会切换到"黑夜"，启动拓展玩法</li>
+            <li>在此期间，角色会出现"视角"，"虫"只有在"视角"内才会出现，如上图；当虫距离角色过近时也会显示</li>
+            <li>在无视角版中，只是没有视角相关功能，其余内容相同</li>
+        </ol>
+    </div>
+
+    <div class="help-section">
+        <h2><i class="fas fa-egg"></i> 彩蛋</h2>
+        <div class="warning">
+            <p><i class="fas fa-exclamation-triangle"></i> 自己去发现吧！</p>
+        </div>
+        <p>线索1：启动游戏后，以满血状态，200的分数结束游戏</p>
+        <p>线索2：在线索一的前提下，立刻退出游戏</p>
+        <div class="note">
+            <p><i class="fas fa-sticky-note"></i> 注：</p>
+            <p>1. Scratch版没有彩蛋</p>
+            <p>2. 各个版本之间的满血状态不同，具体内容见更新日志</p>
+        </div>
+    </div>
+</div>
+
+<script src="../sidebar.js"></script>
+</body>
+</html>

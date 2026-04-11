@@ -617,6 +617,80 @@ main {
     gap: 12px;
 }
 
+.project-links-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.project-links-group.collapsible {
+    display: none;
+    animation: fadeInLinks 0.3s ease;
+}
+
+.project-links-group.collapsible.show {
+    display: grid;
+}
+
+@keyframes fadeInLinks {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toggle-more-links {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(100, 181, 246, 0.1));
+    border: 2px dashed var(--primary-blue);
+    border-radius: 8px;
+    color: var(--primary-blue);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.toggle-more-links:hover {
+    background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+    color: var(--text-on-blue);
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.toggle-more-links .toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-more-links.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.project-links-group .group-label {
+    grid-column: 1 / -1;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 2px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 
 .project-warning {
     display: block;
