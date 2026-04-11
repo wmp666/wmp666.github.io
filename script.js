@@ -20,6 +20,8 @@ document.addEventListener('click', function(event) {
 
 const navItems = document.querySelectorAll('.nav-item');
 const sections = document.querySelectorAll('main section');
+const introduction = document.getElementById("introduction");
+var introductionCount = 0;
 
 navItems.forEach(item => {
     if (item.id !== 'secret-link') {
@@ -45,6 +47,13 @@ navItems.forEach(item => {
             this.classList.add('active');
 
             if (page === 'home') {
+                introductionCount = 0;
+                document.getElementById("avatar").innerHTML =
+                    `<div class="avatar-container" id="avatar">
+                <img src="avatar.png" alt="头像" class="avatar">
+                <div class="avatar-ring"></div>
+            </div>`;
+                isAuthorBir()
                 document.querySelector('.intro-section').classList.add('active');
             } else if (page === 'projects') {
                 document.querySelector('.projects-section').classList.add('active');
@@ -54,6 +63,44 @@ navItems.forEach(item => {
         });
     }
 });
+
+async function isAuthorBir(){
+    const name = document.getElementById("name");
+    if (await checkDate(9, 17, true)){
+
+        name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
+        introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
+
+    }else{
+        introduction.innerHTML = `<p class="tagline" id="introduction">很高兴认识你！交个朋友吧</p>`;
+
+    }
+}
+
+introduction.addEventListener("click", function() {
+    introductionCount++;
+    if (5 < introductionCount && introductionCount <= 10) {
+        document.getElementById("avatar").innerHTML =
+            `<div class="avatar-container" id="avatar">
+                <img src="avatar3.jpg" alt="头像" class="avatar">
+                <div class="avatar-ring"></div>
+            </div>`;
+
+        introduction.innerHTML =
+            `<p class="tagline" id="introduction">我不过是一个愚蠢的小丑,不配被任何人注视</p>`;
+    }
+    else if (introductionCount > 10) {
+        document.getElementById("avatar").innerHTML =
+            `<div class="avatar-container" id="avatar">
+                <img src="avatar2.jpg" alt="头像" class="avatar">
+                <div class="avatar-ring"></div>
+            </div>`;
+        introduction.innerHTML =
+            `<p class="tagline" id="introduction">我的存在改变了他人的生活轨迹，让他们的生活不再完美，我带来了瑕疵，或许我不该与他们相见...<br><br>多么愚蠢的想法，我还是把自己想的太重要了，我的出现又怎能改变他们呢...</p>`;
+    }
+    else isAuthorBir()
+    console.log(introductionCount)
+})
 
 const secretLink = document.getElementById('secret-link');
 const passwordModal = document.getElementById('password-modal');
@@ -209,17 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
-async function isAuthorBir(){
-    const introduction = document.getElementById("introduction");
-    const name = document.getElementById("name");
-    if (await checkDate(9, 17, true)){
-        name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
-        introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
-    }else{
-        introduction.innerHTML = `<p class="tagline" id="introduction">很高兴认识你！交个朋友吧</p>`;
 
-    }
-}
 
 // 折叠/展开链接组功能
 function toggleLinks(button) {
