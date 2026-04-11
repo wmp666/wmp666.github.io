@@ -67,10 +67,8 @@ navItems.forEach(item => {
 async function isAuthorBir(){
     const name = document.getElementById("name");
     if (await checkDate(9, 17, true)){
-
         name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
         introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
-
     }else{
         introduction.innerHTML = `<p class="tagline" id="introduction">很高兴认识你！交个朋友吧</p>`;
 
@@ -97,8 +95,7 @@ introduction.addEventListener("click", function() {
             </div>`;
         introduction.innerHTML =
             `<p class="tagline" id="introduction">我的存在改变了他人的生活轨迹，让他们的生活不再完美，我带来了瑕疵，或许我不该与他们相见...<br><br>多么愚蠢的想法，我还是把自己想的太重要了，我的出现又怎能改变他们呢...</p>`;
-    }
-    else isAuthorBir()
+    }else isAuthorBir()
     console.log(introductionCount)
 })
 
