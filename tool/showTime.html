@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间显示工具</title>
+    <link rel="shortcut icon" href="../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2196F3;
+            --blue-light: #64B5F6;
+            --blue-dark: #1976D2;
+            --text-on-blue: #FFFFFF;
+            --background: #F5F9FF;
+            --card-bg: #FFFFFF;
+            --shadow: rgba(33, 150, 243, 0.1);
+            --text-color: #333333;
+            --text-light: #666666;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #F5F9FF 0%, #E3F2FD 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-container {
+            text-align: center;
+            padding: 60px 40px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 40px var(--shadow);
+            border: 2px solid #E3F2FD;
+            max-width: 800px;
+            width: 90%;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .time-title {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 40px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .time-display {
+            margin: 30px 0;
+        }
+
+        .time-main {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark), var(--blue-light), var(--primary-blue));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .date-display {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .weekday-display {
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .time-note {
+            margin-top: 30px;
+            padding: 15px 20px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            color: var(--text-on-blue);
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, var(--blue-dark), var(--primary-blue));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .full-screen-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            color: var(--text-on-blue);
+            font-size: 1.5rem;
+        }
+
+        .full-screen-button:hover {
+            background: linear-gradient(135deg, var(--blue-dark), var(--primary-blue));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+        }
+
+        .full-screen-button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        @media (max-width: 768px) {
+            .time-main {
+                font-size: 3.5rem;
+            }
+
+            .date-display {
+                font-size: 1.4rem;
+            }
+
+            .weekday-display {
+                font-size: 1.2rem;
+            }
+
+            .time-container {
+                padding: 40px 25px;
+            }
+
+            .back-button {
+                bottom: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+
+            .full-screen-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <h1 class="time-title">
+            <i class="fas fa-clock"></i>
+            当前时间
+        </h1>
+        
+        <div class="time-display">
+            <div class="time-main" id="timeMain">00:00:00</div>
+            <div class="date-display" id="dateDisplay">加载中...</div>
+            <div class="weekday-display" id="weekdayDisplay"></div>
+        </div>
+
+        <div class="time-note">
+            <i class="fas fa-info-circle"></i>
+            显示的时间为系统时间，而非服务器时间
+        </div>
+    </div>
+
+    <a href="../webTool.html" class="back-button" title="返回小工具页面">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <button class="full-screen-button" title="全屏显示" id="full-screen-button">
+        <i class="fas fa-expand"></i>
+    </button>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            
+            // 获取时间
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            // 获取日期
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            
+            // 获取星期
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekday = weekdays[now.getDay()];
+            
+            // 更新显示
+            document.getElementById('timeMain').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('dateDisplay').textContent = `${year}年${month}月${day}日`;
+            document.getElementById('weekdayDisplay').textContent = weekday;
+        }
+
+        // 立即更新一次
+        updateTime();
+        
+        // 每秒更新
+        setInterval(updateTime, 1000);
+
+
+        const html = document.querySelector('html');
+        const fullScreenBtn = document.getElementById('full-screen-button');
+        
+        // 更新全屏按钮图标
+        function updateFullScreenIcon() {
+            if (document.fullscreenElement) {
+                fullScreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                fullScreenBtn.title = '退出全屏';
+            } else {
+                fullScreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                fullScreenBtn.title = '全屏显示';
+            }
+        }
+        
+        // 监听全屏变化事件
+        document.addEventListener('fullscreenchange', updateFullScreenIcon);
+        document.addEventListener('webkitfullscreenchange', updateFullScreenIcon);
+        document.addEventListener('mozfullscreenchange', updateFullScreenIcon);
+        document.addEventListener('MSFullscreenChange', updateFullScreenIcon);
+        
+        // 点击切换全屏
+        fullScreenBtn.onclick = () => {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                html.requestFullscreen()
+                    .then(() => {
+                        console.log('进入全屏成功');
+                    })
+                    .catch((err) => {
+                        console.error('进入全屏失败:', err);
+                    });
+            } else {
+                // 退出全屏
+                document.exitFullscreen()
+                    .then(() => {
+                        console.log('退出全屏成功');
+                    })
+                    .catch((err) => {
+                        console.error('退出全屏失败:', err);
+                    });
+            }
+        }
+    </script>
+</body>
+</html>

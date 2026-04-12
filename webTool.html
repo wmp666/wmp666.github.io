@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美图鉴赏 - wmp666</title>
+    <title>小工具</title>
     <link rel="shortcut icon" href="avatar.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -30,11 +29,11 @@
                 <i class="fas fa-gamepad"></i>
                 <span>小玩意儿</span>
             </a></li>
-            <li><a href="webTool.html" class="nav-item" data-page="projects">
+            <li><a href="#" class="nav-item active" data-page="projects">
                 <i class="fas fa-tools"></i>
                 <span>小工具</span>
             </a></li>
-            <li><a href="#" class="nav-item active">
+            <li><a href="showImage.html" class="nav-item">
                 <i class="fas fa-image"></i>
                 <span>美图鉴赏</span>
             </a></li>
@@ -55,14 +54,22 @@
 <main id="content">
     <section class="gallery-section active">
         <div class="section-header">
-            <h2><i class="fas fa-image"></i> <a class="gradientText">美图鉴赏</a></h2>
+            <h2><i class="fas fa-tools"></i> <a class="gradientText">小工具</a></h2>
             <p>诶嘿</p>
         </div>
-        <div class="gallery-grid">
-            <!-- 图片将在后续添加 -->
-            <div class="gallery-placeholder">
-                <i class="fas fa-images"></i>
-                <p>暂无图片，敬请期待...</p>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="gradientText">时间显示</h3>
+                <p>时间显示工具</p>
+                <p class="project-warning">
+                    显示的时间为系统时间，而非服务器时间
+                </p>
+                <a href="tool/showTime.html" target="_blank" rel="noopener noreferrer" class="project-link">
+                    启动 <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>

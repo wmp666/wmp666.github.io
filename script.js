@@ -30,7 +30,7 @@ navItems.forEach(item => {
             const page = this.getAttribute('data-page');
             
             // 如果链接包含URL参数或者是外部链接，允许默认跳转行为
-            if (href && (href.includes('?') || href.includes('showImage.html'))) {
+            if (!href.includes("#")) {
                 return; // 不阻止默认行为，让链接正常跳转
             }
             
@@ -95,7 +95,7 @@ introduction.addEventListener("click", function() {
             </div>`;
         introduction.innerHTML =
             `<p class="tagline" id="introduction">我的存在改变了他人的生活轨迹，让他们的生活不再完美，我带来了瑕疵，或许我不该与他们相见...<br><br>多么愚蠢的想法，我还是把自己想的太重要了，我的出现又怎能改变他们呢...</p>`;
-    }else isAuthorBir()
+    }else isAut999horBir()
     console.log(introductionCount)
 })
 
@@ -234,16 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setTimeout(() => {
         document.body.style.opacity = '1';
-
-        /*const nameElement = document.querySelector('.gradientText');
-        const taglineElement = document.querySelector('.tagline');
-*/
-        /*if (nameElement) {
-            nameElement.textContent = '无名牌';
-        }
-        if (taglineElement) {
-            taglineElement.textContent = '很高兴认识你！交个朋友吧';
-        }*/
         
         // 检查是否是作者生日
         isAuthorBir();
