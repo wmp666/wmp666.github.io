@@ -28,7 +28,7 @@
 ---
 
 ### 🚦 减速带
-- **版本**：0.2.2
+- **版本**：0.2.4以上
 - **简介**：从 Ghost Downloader 3 获得启发的多功能下载器，同时支持简单的视频处理
 - **链接**：
   - [下载（Releases）](https://github.com/wmp666/Speed_Bump/releases)
