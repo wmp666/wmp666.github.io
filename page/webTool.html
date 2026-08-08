@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小工具</title>
+    <link rel="shortcut icon" href="../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="site-title">
+    <span class="blue-text">wmp666</span>的个人主页
+</header>
+
+<aside id="sidebar" class="sidebar">
+    <nav class="sidebar-nav">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-bars"></i> 菜单</h3>
+            <button class="close-sidebar" id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../index.html?page=home" class="nav-item" data-page="home">
+                <i class="fas fa-user"></i>
+                <span>个人主页</span>
+            </a></li>
+            <li><a href="../index.html?page=projects" class="nav-item" data-page="projects">
+                <i class="fas fa-gamepad"></i>
+                <span>小玩意儿</span>
+            </a></li>
+            <li><a href="#" class="nav-item active" data-page="projects">
+                <i class="fas fa-tools"></i>
+                <span>小工具</span>
+            </a></li>
+            <li><a href="showImage.html" class="nav-item">
+                <i class="fas fa-image"></i>
+                <span>美图鉴赏</span>
+            </a></li>
+
+        </ul>
+        <div class="sidebar-footer">
+            <p>© 2026-现在 wmp666</p>
+        </div>
+    </nav>
+</aside>
+
+<button class="menu-toggle" id="menu-toggle">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+</button>
+
+<main id="content">
+    <section class="gallery-section active">
+        <div class="section-header">
+            <h2><i class="fas fa-tools"></i> <a class="gradientText">小工具</a></h2>
+            <p>诶嘿</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="gradientText">时间显示</h3>
+                <p>时间显示工具</p>
+                <p class="project-warning">
+                    显示的时间为系统时间，而非服务器时间
+                </p>
+                <a href="../tool/showTime.html" target="_blank" rel="noopener noreferrer" class="project-link">
+                    启动 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

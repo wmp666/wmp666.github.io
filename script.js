@@ -75,30 +75,6 @@ async function isAuthorBir(){
     }
 }
 
-introduction.addEventListener("click", function() {
-    introductionCount++;
-    if (5 < introductionCount && introductionCount <= 10) {
-        document.getElementById("avatar").innerHTML =
-            `<div class="avatar-container" id="avatar">
-                <img src="avatar3.jpg" alt="头像" class="avatar">
-                <div class="avatar-ring"></div>
-            </div>`;
-
-        introduction.innerHTML =
-            `<p class="tagline" id="introduction">我不过是一个愚蠢的小丑,不配被任何人注视</p>`;
-    }
-    else if (introductionCount > 10) {
-        document.getElementById("avatar").innerHTML =
-            `<div class="avatar-container" id="avatar">
-                <img src="avatar2.jpg" alt="头像" class="avatar">
-                <div class="avatar-ring"></div>
-            </div>`;
-        introduction.innerHTML =
-            `<p class="tagline" id="introduction">我的存在改变了他人的生活轨迹，让他们的生活不再完美，我带来了瑕疵，或许我不该与他们相见...<br><br>多么愚蠢的想法，我还是把自己想的太重要了，我的出现又怎能改变他们呢...</p>`;
-    }else isAut999horBir()
-    console.log(introductionCount)
-})
-
 const secretLink = document.getElementById('secret-link');
 const passwordModal = document.getElementById('password-modal');
 const closeModal = document.querySelector('.close-modal');
