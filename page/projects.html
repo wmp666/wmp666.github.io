@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wmp666的小玩意儿</title>
+    <link rel="shortcut icon" href="../avatar.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="site-title">
+    <span class="blue-text">wmp666</span>的个人主页
+</header>
+
+<aside id="sidebar" class="sidebar">
+    <nav class="sidebar-nav">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-bars"></i> 菜单</h3>
+            <button class="close-sidebar" id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../index.html" class="nav-item"><i class="fas fa-user"></i><span>个人主页</span></a></li>
+            <li><a href="projects.html" class="nav-item active"><i class="fas fa-gamepad"></i><span>小玩意儿</span></a></li>
+            <li><a href="webTool.html" class="nav-item"><i class="fas fa-tools"></i><span>小工具</span></a></li>
+            <li><a href="showImage.html" class="nav-item"><i class="fas fa-image"></i><span>美图鉴赏</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>© 2026-现在 wmp666</p>
+        </div>
+    </nav>
+</aside>
+
+<button class="menu-toggle" id="menu-toggle">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+</button>
+
+<main id="content">
+    <section class="projects-section active">
+        <div class="section-header">
+            <h2><i class="fas fa-gamepad"></i> <a class="gradientText">小玩意儿</a></h2>
+            <p>这里是我的一些趣味项目和工具</p>
+            <p>这些项目大多为自主开发，少量(可能也不少吧)借助AI辅助，所以有些地方可能做的不好，没有参考价值</p>
+            <p class="project-warning">
+                项目中的下载链接的密码全是1234
+            </p>
+        </div>
+        <div class="projects-grid">
+            <!-- 班级工具 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="gradientText">班级工具</h3>
+                <p class="project-verLine">Version: 2.2.0.0.8以上</p>
+                <p>用于高效管理班级</p>
+                <p class="project-warning">
+                    目前因测试班级下线，更新缓慢
+                </p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">文档</div>
+                    <a href="https://github.com/wmp666/ClassTools_JDK25/wiki/" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-book"></i>Wiki
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uzytpkf" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                    <a href="https://github.com/wmp666/ClassTools_JDK25" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 减速带 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>减速带</h3>
+                <p class="project-verLine">Version: 0.3.3以上</p>
+                <p>从Ghost Downloader 3中获得启发的多功能下载器，同时支持简单的视频处理</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://github.com/wmp666/Speed_Bump_plugin/releases" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-puzzle-piece"></i>解析器拓展
+                    </a>
+                    <a href="https://github.com/wmp666/Speed_Bump/releases" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                    <a href="https://github.com/wmp666/Speed_Bump" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 倒计时 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>倒计时2.0</h3>
+                <p class="project-verLine">Version: 2.0</p>
+                <p>基于班级工具开发的新版倒计时</p>
+                <p class="project-warning">
+                    该项功能已被归入班级工具，大概不会更新
+                </p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uym5vla" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                    <a href="https://github.com/wmp666/CountDown2" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 磨刀石 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>磨刀石</h3>
+                <p class="project-verLine">Version: 2.1.2以上</p>
+                <p>班级工具的衍生物，获取搭配上班级工具的课表会有意想不到的效果</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uzytpej" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                    <a href="https://github.com/wmp666/Whetstone" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 快捷工具 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>快捷工具</h3>
+                <p class="project-verLine">Version: 1.4</p>
+                <p>独立开发项目，从班级工具的快捷工具中获得启示<br>
+                    支持通过导入添加工具，作者开发的工具所属仓库以<code>QTools_</code>开头></p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://github.com/wmp666/quick_tools/releases/tag/0.1" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-puzzle-piece"></i>工具库
+                    </a>
+                    <a href="https://github.com/wmp666/quick_tools/releases/latest" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                    <a href="https://github.com/wmp666/quick_tools" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Scratch项目 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Scratch项目</h3>
+                <p>用Scratch/TurboWarp开发的各种小游戏</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://github.com/wmp666/Scratch" target="_blank" rel="noopener noreferrer" class="project-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 贪吃蛇 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>贪吃蛇</h3>
+                <p class="project-verLine">Version: 1.1.0</p>
+                <p>自制的贪吃蛇，但似乎夹带了些私活</p>
+                <p class="project-warning">这只是个"恶搞"别人的游戏，不会再更新(大概)</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uzytt6f" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">开始游戏</div>
+                    <a href="game/snake.html" class="project-link" target="_blank" rel="noopener noreferrer">
+                        现在启动 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- "闰土"刺虫 -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>"闰土"刺虫</h3>
+                <p class="project-verLine"> New Version:ZN-1.9.3(05E666)<br>Old Version:1.25.03 </p>
+                <p>一个杀虫子的解压游戏，弥补过去的一些遗憾...</p>
+                <p class="project-warning">一年前左右完成此项目，暂时没有更新计划</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">文档</div>
+                    <a href="game/rtcc/help.html" class="project-link">
+                        <i class="fas fa-book"></i>玩法
+                    </a>
+                    <a href="game/rtcc/updateLog.html" class="project-link">
+                        <i class="fas fa-history"></i>更新日志
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uzytsjc" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载05E666
+                    </a>
+                    <a href="https://wmp666.lanzouw.com/b00uzytskd" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载29A5E3
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">开始游戏</div>
+                    <a href="game/rtcc05E666.html" class="project-link" target="_blank" rel="noopener noreferrer">
+                        现在启动 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Win OS -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Win OS</h3>
+                <p class="project-verLine">Version: 1.16(PowerBy HighFC_OS 8.88)</p>
+                <p>用Scratch做的一个模拟系统，参考<a href="https://highfcos.mysxl.cn/" target="_blank" rel="noopener noreferrer">HighFC OS</a>，去除了部分暂时未制作完的功能</p>
+                <p class="project-warning">此模拟系统功能思路和部分素材并非原创，其余内容皆为作者原创</p>
+                <p class="project-warning">一年多未打开此项目，更新缓慢</p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">文档</div>
+                    <a href="game/winos/updateLog.html" class="project-link">
+                        <i class="fas fa-history"></i>更新日志
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">资源</div>
+                    <a href="https://wmp666.lanzouw.com/b00uzyts3g" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <i class="fas fa-download"></i>下载
+                    </a>
+                </div>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">开始游戏</div>
+                    <a href="game/winos/src/index.html" class="project-link" target="_blank" rel="noopener noreferrer">
+                        现在启动 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 元素2048(破解版) -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>元素2048(破解版)</h3>
+                <p>基于<a href="https://github.com/glukascewic1/Isotopic2048/" target="_blank" rel="noopener noreferrer">Isotopic2048</a>开发的作弊版</p>
+                <p class="project-warning">
+                    这个版本仅供娱乐，作弊被发现导致的后果，作者不敢承担=(
+                </p>
+                <button class="toggle-more-links" onclick="toggleLinks(this)">
+                    <span class="toggle-text">查看更多</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </button>
+                <div class="project-links-group collapsible">
+                    <div class="group-label">开始游戏</div>
+                    <a href="https://glukascewic1.github.io/Isotopic2048/" target="_blank" rel="noopener noreferrer" class="project-link">
+                        我要玩原版 <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="https://wmp-isotopic2048-cheat.pages.dev/" target="_blank" rel="noopener noreferrer" class="project-link">
+                        现在启动 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="password-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-lock"></i> 访问验证</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p>请输入访问码以继续</p>
+            <div class="input-group">
+                <label for="access-code"></label><input type="password" id="access-code" placeholder="输入访问码">
+                <button id="submit-code" class="blue-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p id="error-msg" class="error-msg">
+                <i class="fas fa-exclamation-circle"></i> 访问码错误，请重试
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="../birthday/lunarCalendar.js"></script>
+<script src="../birthday/checkDate.js"></script>
+<script src="../script.js"></script>
+<script>
+    // 移除导航点击拦截，使链接正常跳转
+    (function() {
+        var navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(function(el) {
+            var newEl = el.cloneNode(true);
+            el.parentNode.replaceChild(newEl, el);
+        });
+    })();
+</script>
+</body>
+</html>
