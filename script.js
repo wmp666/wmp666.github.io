@@ -1,293 +1,392 @@
-const menuToggle = document.getElementById('menu-toggle');
-const sidebar = document.getElementById('sidebar');
-const closeSidebar = document.getElementById('close-sidebar');
+/**
+ * wmp666 个人主页 - 全站公共脚本
+ * 供 index.html 与 page/* 复用；整体 null-safe，任何元素缺失都不会抛错。
+ */
+(function () {
+    'use strict';
 
-menuToggle.addEventListener('click', function() {
-    sidebar.classList.toggle('active');
-});
+    var EMAIL = '2134868121@qq.com';
 
-closeSidebar.addEventListener('click', function() {
-    sidebar.classList.remove('active');
-});
+    /** 访问码 -> 目标页（原样保留，不要改动路由） */
+    var ACCESS_ROUTES = {
+        '260328081011': 'game/askQuestion.html',
+        '21090223': 'birthday/xhc.html',
+        '25081011': 'birthday/lcl.html',
+        '15090129': 'birthday/yht.html',
+        '24090624': 'birthday/xtq.html'
+    };
 
-document.addEventListener('click', function(event) {
-    if (!sidebar.contains(event.target) &&
-        !menuToggle.contains(event.target) &&
-        sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
+    /* ------------------------------------------------------------------ */
+    /* 小工具                                                              */
+    /* ------------------------------------------------------------------ */
+
+    function byId(id) {
+        return document.getElementById(id) || null;
     }
-});
 
-const navItems = document.querySelectorAll('.nav-item');
-const sections = document.querySelectorAll('main section');
-const introduction = document.getElementById("introduction");
-var introductionCount = 0;
+    function qs(selector, root) {
+        try {
+            return (root || document).querySelector(selector) || null;
+        } catch (e) {
+            return null;
+        }
+    }
 
-navItems.forEach(item => {
-    if (item.id !== 'secret-link') {
-        item.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            const page = this.getAttribute('data-page');
-            
-            // 如果链接包含URL参数或者是外部链接，允许默认跳转行为
-            if (!href.includes("#")) {
-                return; // 不阻止默认行为，让链接正常跳转
-            }
-            
-            // 如果是gallery且没有href，也允许跳转
-            if (page === 'gallery' && href === 'showImage.html') {
-                return;
-            }
-            
-            e.preventDefault();
+    function qsa(selector, root) {
+        try {
+            return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+        } catch (e) {
+            return [];
+        }
+    }
 
-            navItems.forEach(nav => nav.classList.remove('active'));
-            sections.forEach(section => section.classList.remove('active'));
+    function hasLayui() {
+        return typeof window.layui !== 'undefined'
+            && window.layui
+            && typeof window.layui.use === 'function';
+    }
 
-            this.classList.add('active');
+    /**
+     * layui 存在时才执行 cb(layer)；返回是否真的执行了。
+     * 页面没引入 layui.js 时静默跳过，不抛错。
+     */
+    function withLayer(callback) {
+        if (!hasLayui()) return false;
+        try {
+            window.layui.use(['layer'], function () {
+                var layer = window.layui.layer;
+                if (layer && typeof callback === 'function') {
+                    try {
+                        callback(layer);
+                    } catch (e) {
+                        console.warn('[site] layer 回调异常：', e);
+                    }
+                }
+            });
+        } catch (e) {
+            console.warn('[site] layui 加载失败：', e);
+            return false;
+        }
+        return true;
+    }
 
-            if (page === 'home') {
-                introductionCount = 0;
-                document.getElementById("avatar").innerHTML =
-                    `<div class="avatar-container" id="avatar">
-                <img src="avatar.png" alt="头像" class="avatar">
-                <div class="avatar-ring"></div>
-            </div>`;
-                isAuthorBir()
-                document.querySelector('.intro-section').classList.add('active');
-            } else if (page === 'projects') {
-                document.querySelector('.projects-section').classList.add('active');
-            }
-
-            sidebar.classList.remove('active');
+    /** 轻提示：优先 layer.msg，退化到 console，绝不抛错 */
+    function notify(text) {
+        var handled = withLayer(function (layer) {
+            layer.msg(text);
         });
+        if (!handled) console.log('[site]', text);
     }
-});
 
-async function isAuthorBir(){
-    const name = document.getElementById("name");
-    if (await checkDate(9, 17, true)){
-        name.innerHTML = `<p class="name" id="name"><i class="fa fa-birthday-cake"></i><br>祝自己生日快乐！</p>`;
-        introduction.innerHTML = `<p class="tagline" id="introduction">今天是我生日能祝福一下我吗</p>`;
-    }else{
-        introduction.innerHTML = `<p class="tagline" id="introduction">很高兴认识你！交个朋友吧</p>`;
+    /* ------------------------------------------------------------------ */
+    /* 顶部导航（手机端下拉面板）                                            */
+    /* ------------------------------------------------------------------ */
 
+    function closeNav() {
+        var header = qs('.site-header');
+        var toggle = byId('nav-toggle');
+        if (header) header.classList.remove('nav-open');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
     }
-}
 
-const secretLink = document.getElementById('secret-link');
-const passwordModal = document.getElementById('password-modal');
-const closeModal = document.querySelector('.close-modal');
-const submitCode = document.getElementById('submit-code');
-const accessCodeInput = document.getElementById('access-code');
-const errorMsg = document.getElementById('error-msg');
+    function initNavbar() {
+        var header = qs('.site-header');
+        if (!header) return;
 
-secretLink.addEventListener('click', function(e) {
-    e.preventDefault();
-    passwordModal.classList.add('active');
-    sidebar.classList.remove('active');
-    setTimeout(() => {
-        accessCodeInput.focus();
-    }, 100);
-});
-
-closeModal.addEventListener('click', function() {
-    passwordModal.classList.remove('active');
-    errorMsg.classList.remove('show');
-    accessCodeInput.value = '';
-});
-
-passwordModal.addEventListener('click', function(e) {
-    if (e.target === passwordModal) {
-        passwordModal.classList.remove('active');
-        errorMsg.classList.remove('show');
-        accessCodeInput.value = '';
-    }
-});
-
-submitCode.addEventListener('click', async function() {
-    const code = accessCodeInput.value.trim();
-
-
-    if (code === '260328081011') {
-        window.location.href = 'game/askQuestion.html';
-    } else if(code === '21090223'){
-        window.location.href = 'birthday/xhc.html';
-    } else if(code === '25081011'){
-        window.location.href = 'birthday/lcl.html';
-    } else if(code === '15090129'){
-        window.location.href = 'birthday/yht.html';
-    } else if(code === '24090624'){
-        window.location.href = 'birthday/xtq.html';
-    } else {
-        errorMsg.classList.add('show');
-        accessCodeInput.value = '';
-        accessCodeInput.focus();
-
-        setTimeout(() => {
-            errorMsg.classList.remove('show');
-        }, 3000);
-    }
-});
-
-accessCodeInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        submitCode.click();
-    }
-});
-
-// 邮箱按钮点击显示邮箱
-const emailIcon = document.querySelector('.social-icon .fa-envelope');
-if (emailIcon) {
-    const emailButton = emailIcon.parentElement;
-    let emailTooltip = null;
-
-    emailButton.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // 移除已存在的提示框
-        if (emailTooltip) {
-            emailTooltip.remove();
-            emailTooltip = null;
-            return;
+        var toggle = byId('nav-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', function (event) {
+                event.stopPropagation();
+                var open = header.classList.toggle('nav-open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
         }
 
-        // 创建邮箱提示框
-        emailTooltip = document.createElement('div');
-        emailTooltip.className = 'email-tooltip';
-        emailTooltip.innerHTML = `
-            <span class="email-text">2134868121@qq.com</span>
-            <button class="copy-email" title="复制邮箱">
-                <i class="fas fa-copy"></i>
-            </button>
-        `;
-
-        // 定位提示框
-        const rect = emailButton.getBoundingClientRect();
-        emailTooltip.style.position = 'fixed';
-        emailTooltip.style.left = rect.left + (rect.width / 2) - 120 + 'px';
-        emailTooltip.style.top = rect.top - 60 + 'px';
-        emailTooltip.style.zIndex = '9999';
-
-        document.body.appendChild(emailTooltip);
-
-        // 添加动画
-        setTimeout(() => {
-            emailTooltip.classList.add('show');
-        }, 10);
-
-        // 复制功能
-        const copyBtn = emailTooltip.querySelector('.copy-email');
-        copyBtn.addEventListener('click', function() {
-            navigator.clipboard.writeText('2134868121@qq.com').then(() => {
-                const originalHTML = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalHTML;
-                }, 1500);
+        qsa('.site-nav-main a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                closeNav();
             });
         });
 
-        // 3秒后自动关闭
-        setTimeout(() => {
-            if (emailTooltip) {
-                emailTooltip.classList.remove('show');
-                setTimeout(() => {
-                    if (emailTooltip) {
-                        emailTooltip.remove();
-                        emailTooltip = null;
-                    }
-                }, 300);
+        document.addEventListener('click', function (event) {
+            if (!header.classList.contains('nav-open')) return;
+            if (header.contains(event.target)) return;
+            closeNav();
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeNav();
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) closeNav();
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 邮箱复制                                                            */
+    /* ------------------------------------------------------------------ */
+
+    function copyByTextarea(text) {
+        var helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', 'readonly');
+        helper.style.position = 'fixed';
+        helper.style.top = '-1000px';
+        helper.style.opacity = '0';
+        document.body.appendChild(helper);
+        var copied = false;
+        try {
+            helper.select();
+            copied = document.execCommand('copy');
+        } catch (e) {
+            copied = false;
+        }
+        document.body.removeChild(helper);
+        return copied;
+    }
+
+    function copyEmail() {
+        var done = function () {
+            notify('已复制邮箱：' + EMAIL);
+        };
+        var fallback = function () {
+            if (copyByTextarea(EMAIL)) {
+                done();
+            } else {
+                notify('复制失败，请手动复制：' + EMAIL);
             }
-        }, 3000);
-    });
-}
+        };
 
-// 变色效果 - 名字和标语的颜色渐变动画
-document.addEventListener('DOMContentLoaded', function() {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-        
-        // 检查是否是作者生日
-        isAuthorBir();
-        
-        // 处理URL参数，显示对应页面
-        handlePageNavigation();
-    }, 100);
-});
-
-
-
-// 折叠/展开链接组功能
-function toggleLinks(button) {
-    const card = button.closest('.project-card');
-    const collapsibleGroups = card.querySelectorAll('.project-links-group.collapsible');
-    const toggleText = button.querySelector('.toggle-text');
-    
-    // 检查当前状态
-    const isExpanded = button.classList.contains('expanded');
-    
-    if (isExpanded) {
-        // 收起所有可折叠的链接组
-        collapsibleGroups.forEach(group => {
-            group.classList.remove('show');
-        });
-        button.classList.remove('expanded');
-        toggleText.textContent = '查看更多';
-    } else {
-        // 展开所有可折叠的链接组
-        collapsibleGroups.forEach(group => {
-            group.classList.add('show');
-        });
-        button.classList.add('expanded');
-        toggleText.textContent = '收起';
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            try {
+                navigator.clipboard.writeText(EMAIL).then(done, fallback);
+                return;
+            } catch (e) {
+                fallback();
+                return;
+            }
+        }
+        fallback();
     }
-}
 
-// 处理URL参数导航
-function handlePageNavigation() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('page');
-    
-    if (!page) return;
-    
-    // 隐藏所有section
-    const sections = document.querySelectorAll('main section');
-    sections.forEach(section => section.classList.remove('active'));
-    
-    // 移除所有nav-item的active状态
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(nav => nav.classList.remove('active'));
-    
-    // 根据参数显示对应页面
-    if (page === 'home') {
-        const homeSection = document.querySelector('.intro-section');
-        if (homeSection) {
-            homeSection.classList.add('active');
-            const homeNav = document.querySelector('.nav-item[data-page="home"]');
-            if (homeNav) homeNav.classList.add('active');
-        }
-    } else if (page === 'projects') {
-        const projectsSection = document.querySelector('.projects-section');
-        if (projectsSection) {
-            projectsSection.classList.add('active');
-            const projectsNav = document.querySelector('.nav-item[data-page="projects"]');
-            if (projectsNav) projectsNav.classList.add('active');
-        }
-    } else if (page === 'secret') {
-        // 触发密码模态框
-        const secretLink = document.getElementById('secret-link');
+    /* ------------------------------------------------------------------ */
+    /* 访问验证弹层                                                        */
+    /* ------------------------------------------------------------------ */
+
+    var ACCESS_LAYER_HTML = [
+        '<div class="site-access">',
+        '  <p class="site-access-tip">请输入访问码以继续</p>',
+        '  <div class="layui-form-item">',
+        '    <input type="password" id="access-code" class="layui-input"',
+        '           placeholder="输入访问码" autocomplete="off">',
+        '  </div>',
+        '  <p class="site-access-error" id="access-error">访问码错误，请重试</p>',
+        '  <div class="site-access-actions">',
+        '    <button type="button" class="layui-btn layui-btn-normal" id="submit-code">确定</button>',
+        '  </div>',
+        '</div>'
+    ].join('\n');
+
+    function openAccessLayer() {
+        return withLayer(function (layer) {
+            var width = Math.min(420, Math.floor((window.innerWidth || 1024) * 0.9));
+            layer.open({
+                type: 1,
+                title: '访问验证',
+                area: [width + 'px', '280px'],
+                shadeClose: true,
+                content: ACCESS_LAYER_HTML,
+                success: function (layero) {
+                    var input = layero.find('#access-code')[0] || byId('access-code');
+                    var error = qs('.site-access-error', layero[0]);
+                    var submit = layero.find('#submit-code')[0] || byId('submit-code');
+                    var hideTimer = null;
+
+                    function showError() {
+                        if (!error) return;
+                        error.classList.add('show');
+                        if (hideTimer) clearTimeout(hideTimer);
+                        hideTimer = setTimeout(function () {
+                            error.classList.remove('show');
+                        }, 3000);
+                    }
+
+                    function trySubmit() {
+                        var code = input ? String(input.value || '').trim() : '';
+                        var route = Object.prototype.hasOwnProperty.call(ACCESS_ROUTES, code)
+                            ? ACCESS_ROUTES[code]
+                            : null;
+                        if (route) {
+                            window.location.href = route;
+                            return;
+                        }
+                        if (input) input.value = '';
+                        showError();
+                        if (input) input.focus();
+                    }
+
+                    if (submit) submit.addEventListener('click', trySubmit);
+                    if (input) {
+                        input.addEventListener('keydown', function (event) {
+                            if (event.key === 'Enter' || event.keyCode === 13) {
+                                event.preventDefault();
+                                trySubmit();
+                            }
+                        });
+                        setTimeout(function () {
+                            input.focus();
+                        }, 50);
+                    }
+                }
+            });
+        });
+    }
+
+    function initHeaderActions() {
+        var secretLink = byId('secret-link');
         if (secretLink) {
-            secretLink.click();
+            secretLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                closeNav();
+                openAccessLayer();
+            });
+        }
+
+        var emailBtn = byId('email-btn');
+        if (emailBtn) {
+            emailBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                copyEmail();
+            });
         }
     }
-    
-    // 清除URL参数，避免刷新时重复触发
-    if (page) {
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-}
 
+    /* ------------------------------------------------------------------ */
+    /* 生日彩蛋                                                            */
+    /* ------------------------------------------------------------------ */
+
+    function isAuthorBir() {
+        var nameEl = byId('name');
+        var introEl = byId('introduction');
+        var check = window.checkDate;
+
+        if (typeof check !== 'function') {
+            if (introEl) introEl.textContent = '很高兴认识你！交个朋友吧';
+            return Promise.resolve(false);
+        }
+
+        var pending;
+        try {
+            pending = Promise.resolve(check(9, 17, true));
+        } catch (e) {
+            pending = Promise.resolve(false);
+        }
+
+        return pending.then(function (isBirthday) {
+            if (isBirthday) {
+                if (nameEl) {
+                    nameEl.innerHTML = '<i class="layui-icon layui-icon-gift"></i><br>祝自己生日快乐！';
+                }
+                if (introEl) introEl.textContent = '今天是我生日能祝福一下我吗';
+            } else if (introEl) {
+                introEl.textContent = '很高兴认识你！交个朋友吧';
+            }
+            return !!isBirthday;
+        }, function () {
+            if (introEl) introEl.textContent = '很高兴认识你！交个朋友吧';
+            return false;
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* URL 参数兼容                                                        */
+    /* ------------------------------------------------------------------ */
+
+    function currentMatches(target) {
+        var path = String(window.location.pathname || '').toLowerCase().replace(/\/+$/, '');
+        var want = String(target || '').toLowerCase();
+        if (!want) return false;
+        if (want === 'index.html') {
+            return path === '' || /(^|\/)index\.html$/.test(path);
+        }
+        return path.length >= want.length && path.slice(-want.length) === want;
+    }
+
+    function cleanQuery() {
+        try {
+            if (window.history && typeof window.history.replaceState === 'function') {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        } catch (e) {
+            /* 忽略：部分环境禁止 replaceState */
+        }
+    }
+
+    function handlePageNavigation() {
+        var params;
+        try {
+            params = new URLSearchParams(window.location.search);
+        } catch (e) {
+            return;
+        }
+        var page = params.get('page');
+        if (!page) return;
+
+        var targets = { home: 'index.html', projects: 'page/projects.html' };
+        var target = Object.prototype.hasOwnProperty.call(targets, page) ? targets[page] : null;
+
+        if (page === 'secret') {
+            cleanQuery();
+            var secretLink = byId('secret-link');
+            if (secretLink) secretLink.click();
+            return;
+        }
+
+        if (target && !currentMatches(target)) {
+            window.location.replace(target);
+            return;
+        }
+
+        cleanQuery();
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 启动                                                                */
+    /* ------------------------------------------------------------------ */
+
+    function fadeIn() {
+        var body = document.body;
+        if (!body) return;
+        body.style.opacity = '0';
+        body.style.transition = 'opacity 0.4s ease';
+        var reveal = function () {
+            body.style.opacity = '1';
+        };
+        if (typeof window.requestAnimationFrame === 'function') {
+            window.requestAnimationFrame(function () {
+                window.requestAnimationFrame(reveal);
+            });
+        } else {
+            setTimeout(reveal, 50);
+        }
+    }
+
+    function start() {
+        fadeIn();
+        initNavbar();
+        initHeaderActions();
+        isAuthorBir();
+        handlePageNavigation();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+
+    // 供 HTML 内联调用 / 旧页面调用
+    window.isAuthorBir = isAuthorBir;
+    window.handlePageNavigation = handlePageNavigation;
+})();

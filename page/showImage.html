@@ -5,69 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>美图鉴赏 - wmp666</title>
     <link rel="shortcut icon" href="../avatar.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../layui/css/layui.css">
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<header class="site-title">
-    <span class="blue-text">wmp666</span>的个人主页
-</header>
 
-<aside id="sidebar" class="sidebar">
-    <nav class="sidebar-nav">
-        <div class="sidebar-header">
-            <h3><i class="fas fa-bars"></i> 菜单</h3>
-            <button class="close-sidebar" id="close-sidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="nav-list">
-            <li><a href="../index.html" class="nav-item" data-page="home">
-                <i class="fas fa-user"></i>
-                <span>个人主页</span>
-            </a></li>
-            <li><a href="projects.html" class="nav-item" data-page="projects">
-                <i class="fas fa-gamepad"></i>
-                <span>小玩意儿</span>
-            </a></li>
-            <li><a href="webTool.html" class="nav-item" data-page="projects">
-                <i class="fas fa-tools"></i>
-                <span>小工具</span>
-            </a></li>
-            <li><a href="#" class="nav-item active">
-                <i class="fas fa-image"></i>
-                <span>美图鉴赏</span>
-            </a></li>
+<div class="layui-layout layui-layout-admin site-shell">
 
+    <!-- 顶部栏 -->
+    <header class="layui-header site-header">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-main" aria-label="打开菜单">
+            <i class="layui-icon layui-icon-spread-left"></i>
+        </button>
+        <a class="site-logo" href="../index.html">
+            <span class="blue-text">wmp666</span><span class="logo-sub">的个人主页</span>
+        </a>
+        <ul class="layui-nav site-nav-main" id="site-nav-main" lay-filter="site-menu">
+            <li class="layui-nav-item">
+                <a href="../index.html" data-page="home"><i class="layui-icon layui-icon-home"></i>个人主页</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="projects.html" data-page="projects"><i class="layui-icon layui-icon-component"></i>小玩意儿</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="webTool.html" data-page="tools"><i class="layui-icon layui-icon-util"></i>小工具</a>
+            </li>
+            <li class="layui-nav-item layui-this active">
+                <a href="showImage.html" data-page="gallery"><i class="layui-icon layui-icon-picture"></i>美图鉴赏</a>
+            </li>
         </ul>
-        <div class="sidebar-footer">
-            <p>© 2026-现在 wmp666</p>
-        </div>
-    </nav>
-</aside>
+        <ul class="layui-nav site-nav-right" lay-filter="site-nav-right">
+            <li class="layui-nav-item">
+                <a href="https://github.com/wmp666" target="_blank" rel="noopener" title="GitHub">
+                    <i class="layui-icon layui-icon-github"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="https://space.bilibili.com/1075810224?spm_id_from=333.1007.0.0" target="_blank" rel="noopener" title="哔哩哔哩：没有名字的命名牌">
+                    <svg class="site-svg-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                        <g fill="currentColor">
+                            <path d="M8.4 6.6 6.1 4.3a.9.9 0 0 1 1.3-1.3l2.3 2.3h4.6l2.3-2.3a.9.9 0 0 1 1.3 1.3l-2.3 2.3H8.4Z"></path>
+                            <path fill-rule="evenodd" d="M3.5 10.2A3.7 3.7 0 0 1 7.2 6.5h9.6a3.7 3.7 0 0 1 3.7 3.7v6.1a3.7 3.7 0 0 1-3.7 3.7H7.2a3.7 3.7 0 0 1-3.7-3.7v-6.1Zm3.5 1.9a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm10 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="email-btn" title="复制邮箱">
+                    <i class="layui-icon layui-icon-email"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="secret-link" title="访问验证">
+                    <i class="layui-icon layui-icon-lock"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
 
-<button class="menu-toggle" id="menu-toggle">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</button>
+    <!-- 内容区 -->
+    <div class="layui-body site-body" id="site-body">
+        <div class="page-section">
+            <div class="page-header">
+                <h2><i class="layui-icon layui-icon-picture"></i> 美图鉴赏</h2>
+                <p>诶嘿</p>
+            </div>
 
-<main id="content">
-    <section class="gallery-section active">
-        <div class="section-header">
-            <h2><i class="fas fa-image"></i> <a class="gradientText">美图鉴赏</a></h2>
-            <p>诶嘿</p>
-        </div>
-        <div class="gallery-grid">
-            <!-- 图片将在后续添加 -->
-            <div class="gallery-placeholder">
-                <i class="fas fa-images"></i>
-                <p>暂无图片，敬请期待...</p>
+            <div class="site-grid">
+
+                <!-- 图片将在后续添加 -->
+                <div class="site-cell-full">
+                    <div class="layui-card site-card">
+                        <!-- 占位块需居中，此处用最小内联样式，未新增全局 CSS -->
+                        <div class="layui-card-body" style="text-align: center; padding: 48px 20px;">
+                            <div class="site-card-icon"><i class="layui-icon layui-icon-picture"></i></div>
+                            <p>暂无图片，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </section>
-</main>
+        <footer class="site-footer">© 2026-现在 wmp666</footer>
+    </div>
 
+</div>
+
+<script src="../layui/layui.js"></script>
 <script src="../script.js"></script>
+<script>
+    layui.use(['element', 'layer', 'form'], function () {});
+</script>
 </body>
 </html>
