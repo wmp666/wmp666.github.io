@@ -5,215 +5,361 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>闰土刺虫 更新日志</title>
     <link rel="shortcut icon" href="../../avatar.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
     <link rel="stylesheet" href="../../style.css">
+    <style>
+        /* ===== 本页专有样式（只作用于本页，不写入 style.css） ===== */
+
+        /* 版本卡片标题 */
+        .site-card .layui-card-header {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .site-card .layui-card-header .layui-icon {
+            margin-right: 6px;
+            color: var(--primary-blue);
+            font-size: 15px;
+            vertical-align: -2px;
+        }
+
+        /* 每个版本下的日志条目：去掉原文的纯文字装饰，改为小圆点标记 */
+        .log-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .log-list li {
+            position: relative;
+            margin: 5px 0;
+            padding-left: 14px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .log-list li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 9px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #64B5F6;
+        }
+
+        .log-list li:first-child {
+            margin-top: 0;
+        }
+
+        .log-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 页头副标题与文档互链 */
+        .page-header .site-verline {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .page-header .site-link-group {
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .site-card .layui-card-body {
+                padding: 14px 16px;
+            }
+        }
+    </style>
 </head>
-<body class="changelog-body">
-<aside id="sidebar" class="sidebar">
-    <nav class="sidebar-nav">
-        <div class="sidebar-header">
-            <h3><i class="fas fa-bars"></i> 菜单</h3>
-            <button class="close-sidebar" id="close-sidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="nav-list">
-            <li><a href="help.html" class="nav-item">
-                <i class="fas fa-book"></i>
-                <span>玩法说明</span>
-            </a></li>
-            <li><a href="../../index.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>返回主页</span>
-            </a></li>
+<body>
+
+<div class="layui-layout layui-layout-admin site-shell">
+
+    <!-- 顶部栏 -->
+    <header class="layui-header site-header">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-main" aria-label="打开菜单">
+            <i class="layui-icon layui-icon-spread-left"></i>
+        </button>
+        <a class="site-logo" href="../../index.html">
+            <span class="blue-text">wmp666</span><span class="logo-sub">的个人主页</span>
+        </a>
+        <ul class="layui-nav site-nav-main" id="site-nav-main" lay-filter="site-menu">
+            <li class="layui-nav-item">
+                <a href="../../index.html" data-page="home"><i class="layui-icon layui-icon-home"></i>个人主页</a>
+            </li>
+            <li class="layui-nav-item layui-this active">
+                <a href="../../page/projects.html" data-page="projects"><i class="layui-icon layui-icon-component"></i>小玩意儿</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/webTool.html" data-page="tools"><i class="layui-icon layui-icon-util"></i>小工具</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/showImage.html" data-page="gallery"><i class="layui-icon layui-icon-picture"></i>美图鉴赏</a>
+            </li>
         </ul>
-        <div class="sidebar-footer">
-            <p>© 2026-现在 wmp666</p>
+        <ul class="layui-nav site-nav-right" lay-filter="site-nav-right">
+            <li class="layui-nav-item">
+                <a href="https://github.com/wmp666" target="_blank" rel="noopener" title="GitHub">
+                    <i class="layui-icon layui-icon-github"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="https://space.bilibili.com/1075810224?spm_id_from=333.1007.0.0" target="_blank" rel="noopener" title="哔哩哔哩：没有名字的命名牌">
+                    <svg class="site-svg-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                        <g fill="currentColor">
+                            <path d="M8.4 6.6 6.1 4.3a.9.9 0 0 1 1.3-1.3l2.3 2.3h4.6l2.3-2.3a.9.9 0 0 1 1.3 1.3l-2.3 2.3H8.4Z"></path>
+                            <path fill-rule="evenodd" d="M3.5 10.2A3.7 3.7 0 0 1 7.2 6.5h9.6a3.7 3.7 0 0 1 3.7 3.7v6.1a3.7 3.7 0 0 1-3.7 3.7H7.2a3.7 3.7 0 0 1-3.7-3.7v-6.1Zm3.5 1.9a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm10 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="email-btn" title="复制邮箱">
+                    <i class="layui-icon layui-icon-email"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="secret-link" title="访问验证">
+                    <i class="layui-icon layui-icon-lock"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <!-- 内容区 -->
+    <div class="layui-body site-body" id="site-body">
+        <div class="page-section">
+            <div class="page-header">
+                <h2><i class="layui-icon layui-icon-time"></i> 闰土刺虫 更新日志</h2>
+                <p class="site-verline">内容不一定全面</p>
+                <div class="site-link-group">
+                    <a class="layui-btn layui-btn-primary layui-btn-xs" href="help.html"><i class="layui-icon layui-icon-read"></i>玩法说明</a>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.25.03</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>视野范围更新</li>
+                        <li>在夜晚时，当虫距离角色较近时会显示</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.25.02</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>更新背景音乐</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.25.01</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>回血系统更新</li>
+                        <li>分数处于11~50，每按一次[Q]加1滴血，扣5点分数</li>
+                        <li>分数处于51以上，每按一次[Q]加2滴血，扣15点分数</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.24.02</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>优化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.24.01</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>体验升级</li>
+                        <li>动画更新</li>
+                        <li>操作更新</li>
+                        <li>优化！优化！优化！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.23.05</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>图像更新第五弹：菜单整体</li>
+                        <li>（除角色外，所有图片都经过更新处理）</li>
+                        <li>修改了部分模块，使模块更符合新图像，同时更加Scratch化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.23.04</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>图像更新第四弹</li>
+                        <li>图像处理（分数）、菜单-开始游戏</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.23.03</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>图像更新第三弹</li>
+                        <li>数据处理（血量球）</li>
+                        <li>修复已知问题</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.23.02</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>图像更新第二弹</li>
+                        <li>菜单（复制、退出）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.23.01</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>前所未有的图像更新</li>
+                        <li>菜单（返回）、虫、数据处理、叉（复原）</li>
+                        <li>内容的小小修改</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.22</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>增加背景音乐（追"寻"光的踪迹，不要停下脚步，将这此巡游走完）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.21</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将回血间隔与分数高低关联</li>
+                        <li>将虫刷新间隔与分数高低关联</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.20</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将长时间使用的游戏数据显示方式和图像进行升级</li>
+                        <li>将游戏的血量上限修改为20</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.19</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将游戏难度略微降低</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.18</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>加入彩蛋</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.17</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>在内容上对整体进行小修改</li>
+                        <li>将游戏的难度提升</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.14~1.16</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将"鸣谢名单"弹窗的显示问题修复（弹出后，不能马上隐藏）</li>
+                        <li>修复了"弹出弹窗后，按钮依然可用"的问题（其实这个问题从一开始我就知道，只是懒得修）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.13</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>增加了"鸣谢名单"，让所有参与测试的人员不在"默默无闻"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.12</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>修复了"在1.10更新时，造成的游戏结算页面显示问题"的问题</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.11</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将巨大的角色变得更加小巧，不在笨重</li>
+                        <li>稍稍加快了"虫"的生成、运动速度</li>
+                        <li>将血量上限改为15</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.10</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>将古老的打印动画又拿了出来</li>
+                        <li>将"叉"的外观进行修改</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </nav>
-</aside>
-
-<button class="menu-toggle" id="menu-toggle">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</button>
-
-<div class="changelog-container">
-    <div class="changelog-header">
-        <h1><i class="fas fa-history"></i> 闰土刺虫 更新日志</h1>
-        <p>内容不一定全面</p>
+        <footer class="site-footer">© 2026-现在 wmp666</footer>
     </div>
 
-    <div class="version-section">
-        <h2 class="version-title">版本 1.25.03</h2>
-        <div class="version-content">
-            <p>视野范围更新</p>
-            <p>在夜晚时，当虫距离角色较近时会显示</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.25.02</h2>
-        <div class="version-content">
-            <p>更新背景音乐</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.25.01</h2>
-        <div class="version-content">
-            <p>回血系统更新</p>
-            <p>分数处于11~50，每按一次[Q]加1滴血，扣5点分数</p>
-            <p>分数处于51以上，每按一次[Q]加2滴血，扣15点分数</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.24.02</h2>
-        <div class="version-content">
-            <p>优化</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.24.01</h2>
-        <div class="version-content">
-            <p>体验升级</p>
-            <p>动画更新</p>
-            <p>操作更新</p>
-            <p>优化！优化！优化！</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.23.05</h2>
-        <div class="version-content">
-            <p>图像更新第五弹：菜单整体</p>
-            <p>（除角色外，所有图片都经过更新处理）</p>
-            <p>修改了部分模块，使模块更符合新图像，同时更加Scratch化</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.23.04</h2>
-        <div class="version-content">
-            <p>图像更新第四弹</p>
-            <p>图像处理（分数）、菜单-开始游戏</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.23.03</h2>
-        <div class="version-content">
-            <p>图像更新第三弹</p>
-            <p>数据处理（血量球）</p>
-            <p>修复已知问题</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.23.02</h2>
-        <div class="version-content">
-            <p>图像更新第二弹</p>
-            <p>菜单（复制、退出）</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.23.01</h2>
-        <div class="version-content">
-            <p>前所未有的图像更新</p>
-            <p>菜单（返回）、虫、数据处理、叉（复原）</p>
-            <p>内容的小小修改</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.22</h2>
-        <div class="version-content">
-            <p>增加背景音乐（追"寻"光的踪迹，不要停下脚步，将这此巡游走完）</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.21</h2>
-        <div class="version-content">
-            <p>将回血间隔与分数高低关联</p>
-            <p>将虫刷新间隔与分数高低关联</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.20</h2>
-        <div class="version-content">
-            <p>将长时间使用的游戏数据显示方式和图像进行升级</p>
-            <p>将游戏的血量上限修改为20</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.19</h2>
-        <div class="version-content">
-            <p>将游戏难度略微降低</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.18</h2>
-        <div class="version-content">
-            <p>加入彩蛋</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.17</h2>
-        <div class="version-content">
-            <p>在内容上对整体进行小修改</p>
-            <p>将游戏的难度提升</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.14~1.16</h2>
-        <div class="version-content">
-            <p>将"鸣谢名单"弹窗的显示问题修复（弹出后，不能马上隐藏）</p>
-            <p>修复了"弹出弹窗后，按钮依然可用"的问题（其实这个问题从一开始我就知道，只是懒得修）</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.13</h2>
-        <div class="version-content">
-            <p>增加了"鸣谢名单"，让所有参与测试的人员不在"默默无闻"</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.12</h2>
-        <div class="version-content">
-            <p>修复了"在1.10更新时，造成的游戏结算页面显示问题"的问题</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.11</h2>
-        <div class="version-content">
-            <p>将巨大的角色变得更加小巧，不在笨重</p>
-            <p>稍稍加快了"虫"的生成、运动速度</p>
-            <p>将血量上限改为15</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.10</h2>
-        <div class="version-content">
-            <p>将古老的打印动画又拿了出来</p>
-            <p>将"叉"的外观进行修改</p>
-        </div>
-    </div>
 </div>
 
-<script src="../sidebar.js"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../script.js"></script>
+<script>
+    layui.use(['element', 'layer', 'form'], function () {});
+</script>
 </body>
 </html>

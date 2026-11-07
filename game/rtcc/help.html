@@ -5,126 +5,310 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>闰土刺虫 玩法说明</title>
     <link rel="shortcut icon" href="../../avatar.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
     <link rel="stylesheet" href="../../style.css">
+    <style>
+        /* ===== 本页专有样式（只作用于玩法说明页，不写入 style.css） ===== */
+
+        /* 卡片标题 */
+        .site-card .layui-card-header {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .site-card .layui-card-header .layui-icon {
+            margin-right: 6px;
+            color: var(--primary-blue);
+            font-size: 15px;
+            vertical-align: -2px;
+        }
+
+        /* 卡片正文：段落与列表节奏 */
+        .site-card .layui-card-body p {
+            margin: 0 0 6px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .site-card .layui-card-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .site-card .layui-card-body ol,
+        .site-card .layui-card-body ul {
+            margin: 4px 0 6px;
+            padding-left: 22px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        /* layui.css 含全局 li{list-style:none}，会吃掉卡片正文的列表标记。
+           标记必须声明在 li 上才能盖过全局规则；限定在 .site-card .layui-card-body 内，
+           故不会波及使用 ::before 自绘圆点的 .log-list 等其它页面。 */
+        .site-card .layui-card-body ol {
+            padding-left: 26px; /* 容纳两位数编号 */
+        }
+
+        .site-card .layui-card-body ol > li {
+            list-style: decimal outside;
+        }
+
+        .site-card .layui-card-body ul > li {
+            list-style: disc outside;
+        }
+
+        .site-card .layui-card-body li {
+            margin: 4px 0;
+        }
+
+        /* 卡片内小标题（原文 <h3> （游戏页面）） */
+        .doc-subtitle {
+            margin: 0 0 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .doc-subtitle .layui-icon {
+            margin-right: 4px;
+            color: var(--primary-blue);
+        }
+
+        /* 提示块：原文 .note → 蓝色信息块，原文 .warning → 橙色提醒块（语义不可互换） */
+        .doc-quote.layui-elem-quote {
+            margin: 8px 0 10px;
+            padding: 9px 14px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--background);
+            border-left-color: var(--primary-blue);
+            border-radius: 6px;
+        }
+
+        .doc-quote.layui-elem-quote p {
+            margin: 0;
+        }
+
+        .doc-quote-warning.layui-elem-quote {
+            background-color: #FFF8EC;
+            border-left-color: var(--warning);
+        }
+
+        .doc-quote .layui-icon {
+            margin-right: 4px;
+            vertical-align: -1px;
+        }
+
+        .doc-quote-note .layui-icon {
+            color: var(--primary-blue);
+        }
+
+        .doc-quote-warning .layui-icon {
+            color: var(--warning);
+        }
+
+        /* 按键胶囊：原文的 .key 改成本页专有的浅蓝小胶囊。
+           不用 layui 的 layui-bg-blue：该工具类在 layui.css 里带 !important 的深蓝，
+           会盖掉本页的浅蓝配色；这里保留 layui-badge 组件类并覆盖颜色。 */
+        code.key-pill {
+            display: inline-block;
+            min-width: 0;
+            height: 20px;
+            line-height: 20px;
+            padding: 0 8px;
+            border-radius: 10px;
+            background-color: #E3F2FD;
+            color: #1976D2;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            vertical-align: 1px;
+        }
+
+        /* 页头副标题与文档互链 */
+        .page-header .site-verline {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .page-header .site-link-group {
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .site-card .layui-card-body {
+                padding: 14px 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-<aside id="sidebar" class="sidebar">
-    <nav class="sidebar-nav">
-        <div class="sidebar-header">
-            <h3><i class="fas fa-bars"></i> 菜单</h3>
-            <button class="close-sidebar" id="close-sidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="nav-list">
-            <li><a href="updateLog.html" class="nav-item">
-                <i class="fas fa-history"></i>
-                <span>更新日志</span>
-            </a></li>
-            <li><a href="../../index.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>返回主页</span>
-            </a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <p>© 2026-现在 wmp666</p>
-        </div>
-    </nav>
-</aside>
 
-<button class="menu-toggle" id="menu-toggle">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</button>
+<div class="layui-layout layui-layout-admin site-shell">
 
-<div class="changelog-container">
-    <div class="changelog-header help-header">
-        <h1><i class="fas fa-book"></i> 玩法说明</h1>
-        <p>ZN-1.9.2</p>
-    </div>
-
-    <div class="version-note">
-        <h3><i class="fas fa-info-circle"></i> 版本说明</h3>
-        <p>1. 适用于部分过渡版，和所有其他版本</p>
-        <p>2. 下列图片为HTML版"闰土刺虫"1.23.05(ZN-1.8.3.05P)的截图（图片内容可能与新版有冲突）</p>
-        <p>3. 由于内容更新迅速，玩法文档的内容可能只适用于最新版！</p>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-list"></i> 菜单</h2>
-        <p>左上角为当前版本，右上角为当前页面名称，下方是作者B站主页链接</p>
-        <ol>
-            <li>按下 <span class="key">按钮</span>，开始游戏</li>
-            <li>按下 <span class="key">按钮</span>，获取帮助</li>
-            <li>在可以点击 <span class="key">按钮</span> 来查看更多作者信息</li>
-            <li>按下 <span class="key">按钮</span>，可以查看鸣谢名单</li>
-            <li>按下 <span class="key">按钮</span>，退出游戏</li>
-            <li>你可以在电脑上点击 <span class="key">复制</span>，来复制链接（除Scratch版）</li>
-        </ol>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-gamepad"></i> 游戏页面</h2>
-        <p>点击左上角 <span class="key">按钮</span> 可以返回菜单，左下角为角色数据，右上角为当前页面名称</p>
-        <div class="note">
-            <p><i class="fas fa-heart"></i> 当游戏开始且分数在10以上时，每过一段时间血量加1，直到为满血</p>
-        </div>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-question-circle"></i> 游戏玩法说明</h2>
-        <p>点击 <span class="key">按钮</span> 会显示游戏基本玩法，了解后可以将指针从中划出方框以隐藏显示</p>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-user"></i> 作者详细信息展示</h2>
-        <p>"作者信息"（ZN-1.3.1以上）</p>
-        <p>"鸣谢名单"</p>
-        <p>按下 <span class="key">按钮</span>，显示此方框，你可以看见更详细的作者信息</p>
-        <p>按下 <span class="key">按钮</span>，显示此方框，你可以看见鸣谢内容(说不定你也在上面)</p>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-crosshairs"></i> 游戏玩法</h2>
-        <h3><i class="fas fa-desktop"></i> （游戏页面）</h3>
-        <ol>
-            <li>在此页面可以根据"游戏玩法说明"页面的提示游玩</li>
-            <li>回血系统
-                <ul>
-                    <li>分数处于11~50，每按一次 <span class="key">[Q]</span> 加1滴血，扣5点分数</li>
-                    <li>分数处于51以上，每按一次 <span class="key">[Q]</span> 加2滴血，扣15点分数</li>
-                </ul>
+    <!-- 顶部栏 -->
+    <header class="layui-header site-header">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-main" aria-label="打开菜单">
+            <i class="layui-icon layui-icon-spread-left"></i>
+        </button>
+        <a class="site-logo" href="../../index.html">
+            <span class="blue-text">wmp666</span><span class="logo-sub">的个人主页</span>
+        </a>
+        <ul class="layui-nav site-nav-main" id="site-nav-main" lay-filter="site-menu">
+            <li class="layui-nav-item">
+                <a href="../../index.html" data-page="home"><i class="layui-icon layui-icon-home"></i>个人主页</a>
             </li>
-        </ol>
+            <li class="layui-nav-item layui-this active">
+                <a href="../../page/projects.html" data-page="projects"><i class="layui-icon layui-icon-component"></i>小玩意儿</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/webTool.html" data-page="tools"><i class="layui-icon layui-icon-util"></i>小工具</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/showImage.html" data-page="gallery"><i class="layui-icon layui-icon-picture"></i>美图鉴赏</a>
+            </li>
+        </ul>
+        <ul class="layui-nav site-nav-right" lay-filter="site-nav-right">
+            <li class="layui-nav-item">
+                <a href="https://github.com/wmp666" target="_blank" rel="noopener" title="GitHub">
+                    <i class="layui-icon layui-icon-github"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="https://space.bilibili.com/1075810224?spm_id_from=333.1007.0.0" target="_blank" rel="noopener" title="哔哩哔哩：没有名字的命名牌">
+                    <svg class="site-svg-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                        <g fill="currentColor">
+                            <path d="M8.4 6.6 6.1 4.3a.9.9 0 0 1 1.3-1.3l2.3 2.3h4.6l2.3-2.3a.9.9 0 0 1 1.3 1.3l-2.3 2.3H8.4Z"></path>
+                            <path fill-rule="evenodd" d="M3.5 10.2A3.7 3.7 0 0 1 7.2 6.5h9.6a3.7 3.7 0 0 1 3.7 3.7v6.1a3.7 3.7 0 0 1-3.7 3.7H7.2a3.7 3.7 0 0 1-3.7-3.7v-6.1Zm3.5 1.9a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm10 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="email-btn" title="复制邮箱">
+                    <i class="layui-icon layui-icon-email"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="secret-link" title="访问验证">
+                    <i class="layui-icon layui-icon-lock"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <!-- 内容区 -->
+    <div class="layui-body site-body" id="site-body">
+        <div class="page-section">
+            <div class="page-header">
+                <h2><i class="layui-icon layui-icon-read"></i> 玩法说明</h2>
+                <p class="site-verline">ZN-1.9.2</p>
+                <div class="site-link-group">
+                    <a class="layui-btn layui-btn-primary layui-btn-xs" href="updateLog.html"><i class="layui-icon layui-icon-time"></i>更新日志</a>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-note"></i> 版本说明</div>
+                <div class="layui-card-body">
+                    <p>1. 适用于部分过渡版，和所有其他版本</p>
+                    <p>2. 下列图片为HTML版"闰土刺虫"1.23.05(ZN-1.8.3.05P)的截图（图片内容可能与新版有冲突）</p>
+                    <p>3. 由于内容更新迅速，玩法文档的内容可能只适用于最新版！</p>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-list"></i> 菜单</div>
+                <div class="layui-card-body">
+                    <p>左上角为当前版本，右上角为当前页面名称，下方是作者B站主页链接</p>
+                    <ol>
+                        <li>按下 <code class="layui-badge key-pill">按钮</code>，开始游戏</li>
+                        <li>按下 <code class="layui-badge key-pill">按钮</code>，获取帮助</li>
+                        <li>在可以点击 <code class="layui-badge key-pill">按钮</code> 来查看更多作者信息</li>
+                        <li>按下 <code class="layui-badge key-pill">按钮</code>，可以查看鸣谢名单</li>
+                        <li>按下 <code class="layui-badge key-pill">按钮</code>，退出游戏</li>
+                        <li>你可以在电脑上点击 <code class="layui-badge key-pill">复制</code>，来复制链接（除Scratch版）</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-console"></i> 游戏页面</div>
+                <div class="layui-card-body">
+                    <p>点击左上角 <code class="layui-badge key-pill">按钮</code> 可以返回菜单，左下角为角色数据，右上角为当前页面名称</p>
+                    <blockquote class="layui-elem-quote doc-quote doc-quote-note"><p><i class="layui-icon layui-icon-heart"></i> 当游戏开始且分数在10以上时，每过一段时间血量加1，直到为满血</p></blockquote>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-help"></i> 游戏玩法说明</div>
+                <div class="layui-card-body">
+                    <p>点击 <code class="layui-badge key-pill">按钮</code> 会显示游戏基本玩法，了解后可以将指针从中划出方框以隐藏显示</p>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-user"></i> 作者详细信息展示</div>
+                <div class="layui-card-body">
+                    <p>"作者信息"（ZN-1.3.1以上）</p>
+                    <p>"鸣谢名单"</p>
+                    <p>按下 <code class="layui-badge key-pill">按钮</code>，显示此方框，你可以看见更详细的作者信息</p>
+                    <p>按下 <code class="layui-badge key-pill">按钮</code>，显示此方框，你可以看见鸣谢内容(说不定你也在上面)</p>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-play"></i> 游戏玩法</div>
+                <div class="layui-card-body">
+                    <h3 class="doc-subtitle"><i class="layui-icon layui-icon-console"></i> （游戏页面）</h3>
+                    <ol>
+                        <li>在此页面可以根据"游戏玩法说明"页面的提示游玩</li>
+                        <li>回血系统
+                            <ul>
+                                <li>分数处于11~50，每按一次 <code class="layui-badge key-pill">[Q]</code> 加1滴血，扣5点分数</li>
+                                <li>分数处于51以上，每按一次 <code class="layui-badge key-pill">[Q]</code> 加2滴血，扣15点分数</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-light"></i> 拓展玩法</div>
+                <div class="layui-card-body">
+                    <ol>
+                        <li>在6:00到19:00之间，背景会切换到"白天"</li>
+                        <li>在此时间外，背景会切换到"黑夜"，启动拓展玩法</li>
+                        <li>在此期间，角色会出现"视角"，"虫"只有在"视角"内才会出现，如上图；当虫距离角色过近时也会显示</li>
+                        <li>在无视角版中，只是没有视角相关功能，其余内容相同</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-gift"></i> 彩蛋</div>
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote doc-quote doc-quote-warning"><p><i class="layui-icon layui-icon-help"></i> 自己去发现吧！</p></blockquote>
+                    <p>线索1：启动游戏后，以满血状态，200的分数结束游戏</p>
+                    <p>线索2：在线索一的前提下，立刻退出游戏</p>
+                    <blockquote class="layui-elem-quote doc-quote doc-quote-note"><p><i class="layui-icon layui-icon-note"></i> 注：</p>
+                        <p>1. Scratch版没有彩蛋</p>
+                        <p>2. 各个版本之间的满血状态不同，具体内容见更新日志</p></blockquote>
+                </div>
+            </div>
+        </div>
+        <footer class="site-footer">© 2026-现在 wmp666</footer>
     </div>
 
-    <div class="help-section">
-        <h2><i class="fas fa-expand-arrows-alt"></i> 拓展玩法</h2>
-        <ol>
-            <li>在6:00到19:00之间，背景会切换到"白天"</li>
-            <li>在此时间外，背景会切换到"黑夜"，启动拓展玩法</li>
-            <li>在此期间，角色会出现"视角"，"虫"只有在"视角"内才会出现，如上图；当虫距离角色过近时也会显示</li>
-            <li>在无视角版中，只是没有视角相关功能，其余内容相同</li>
-        </ol>
-    </div>
-
-    <div class="help-section">
-        <h2><i class="fas fa-egg"></i> 彩蛋</h2>
-        <div class="warning">
-            <p><i class="fas fa-exclamation-triangle"></i> 自己去发现吧！</p>
-        </div>
-        <p>线索1：启动游戏后，以满血状态，200的分数结束游戏</p>
-        <p>线索2：在线索一的前提下，立刻退出游戏</p>
-        <div class="note">
-            <p><i class="fas fa-sticky-note"></i> 注：</p>
-            <p>1. Scratch版没有彩蛋</p>
-            <p>2. 各个版本之间的满血状态不同，具体内容见更新日志</p>
-        </div>
-    </div>
 </div>
 
-<script src="../sidebar.js"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../script.js"></script>
+<script>
+    layui.use(['element', 'layer', 'form'], function () {});
+</script>
 </body>
 </html>

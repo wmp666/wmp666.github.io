@@ -5,159 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Win OS 更新日志</title>
     <link rel="shortcut icon" href="../../avatar.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
     <link rel="stylesheet" href="../../style.css">
+    <style>
+        /* ===== 本页专有样式（只作用于本页，不写入 style.css） ===== */
+
+        /* 版本卡片标题 */
+        .site-card .layui-card-header {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .site-card .layui-card-header .layui-icon {
+            margin-right: 6px;
+            color: var(--primary-blue);
+            font-size: 15px;
+            vertical-align: -2px;
+        }
+
+        /* 每个版本下的日志条目：去掉原文的纯文字装饰，改为小圆点标记 */
+        .log-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .log-list li {
+            position: relative;
+            margin: 5px 0;
+            padding-left: 14px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .log-list li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 9px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #64B5F6;
+        }
+
+        .log-list li:first-child {
+            margin-top: 0;
+        }
+
+        .log-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 页头副标题与文档互链 */
+        .page-header .site-verline {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .page-header .site-link-group {
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .site-card .layui-card-body {
+                padding: 14px 16px;
+            }
+        }
+    </style>
 </head>
-<body class="changelog-body">
-<aside id="sidebar" class="sidebar">
-    <nav class="sidebar-nav">
-        <div class="sidebar-header">
-            <h3><i class="fas fa-bars"></i> 菜单</h3>
-            <button class="close-sidebar" id="close-sidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="nav-list">
-            <li><a href="../../index.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>返回主页</span>
-            </a></li>
+<body>
+
+<div class="layui-layout layui-layout-admin site-shell">
+
+    <!-- 顶部栏 -->
+    <header class="layui-header site-header">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-main" aria-label="打开菜单">
+            <i class="layui-icon layui-icon-spread-left"></i>
+        </button>
+        <a class="site-logo" href="../../index.html">
+            <span class="blue-text">wmp666</span><span class="logo-sub">的个人主页</span>
+        </a>
+        <ul class="layui-nav site-nav-main" id="site-nav-main" lay-filter="site-menu">
+            <li class="layui-nav-item">
+                <a href="../../index.html" data-page="home"><i class="layui-icon layui-icon-home"></i>个人主页</a>
+            </li>
+            <li class="layui-nav-item layui-this active">
+                <a href="../../page/projects.html" data-page="projects"><i class="layui-icon layui-icon-component"></i>小玩意儿</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/webTool.html" data-page="tools"><i class="layui-icon layui-icon-util"></i>小工具</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../page/showImage.html" data-page="gallery"><i class="layui-icon layui-icon-picture"></i>美图鉴赏</a>
+            </li>
         </ul>
-        <div class="sidebar-footer">
-            <p>© 2026-现在 wmp666</p>
+        <ul class="layui-nav site-nav-right" lay-filter="site-nav-right">
+            <li class="layui-nav-item">
+                <a href="https://github.com/wmp666" target="_blank" rel="noopener" title="GitHub">
+                    <i class="layui-icon layui-icon-github"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="https://space.bilibili.com/1075810224?spm_id_from=333.1007.0.0" target="_blank" rel="noopener" title="哔哩哔哩：没有名字的命名牌">
+                    <svg class="site-svg-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                        <g fill="currentColor">
+                            <path d="M8.4 6.6 6.1 4.3a.9.9 0 0 1 1.3-1.3l2.3 2.3h4.6l2.3-2.3a.9.9 0 0 1 1.3 1.3l-2.3 2.3H8.4Z"></path>
+                            <path fill-rule="evenodd" d="M3.5 10.2A3.7 3.7 0 0 1 7.2 6.5h9.6a3.7 3.7 0 0 1 3.7 3.7v6.1a3.7 3.7 0 0 1-3.7 3.7H7.2a3.7 3.7 0 0 1-3.7-3.7v-6.1Zm3.5 1.9a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm10 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="email-btn" title="复制邮箱">
+                    <i class="layui-icon layui-icon-email"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="secret-link" title="访问验证">
+                    <i class="layui-icon layui-icon-lock"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <!-- 内容区 -->
+    <div class="layui-body site-body" id="site-body">
+        <div class="page-section">
+            <div class="page-header">
+                <h2><i class="layui-icon layui-icon-time"></i> Win OS 更新日志</h2>
+                <p class="site-verline">更详细的发展史</p>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.16</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>修复浏览器画面无法关闭</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.15</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>桌面升级</li>
+                        <li>导入应用优化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.14</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>改进了导入应用的体验</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.13</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>新增4张壁纸（来源于HighFC OS）</li>
+                        <li>改进了部分代码，更易于管理</li>
+                        <li>新增状态栏</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.12</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>修改了系统名</li>
+                        <li>修改了加载界面</li>
+                        <li>加入了错误应用名删除功能</li>
+                        <li>修复了部分功能</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.11</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>修复已知问题</li>
+                        <li>更换了信息显示界面的背景</li>
+                        <li>优化了代码</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.10</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>为了让代码方便管理，同时提高自由度，优化了"菜单"角色中的代码</li>
+                        <li>根据 HighFC OS 6.73Dev Plus 的新增内容，添加了应用导入功能</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.9（01）</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>更换了加载动画</li>
+                        <li>加快了重启速度</li>
+                        <li>统一了窗口的大标题样式</li>
+                        <li>更新了系统栏的图标</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.8</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>给时间界面加入了日期</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.7（01）</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>根据HighFC OS 5.67AI Plus 的新增内容，添加了应用商店</li>
+                        <li>加入重启按钮</li>
+                        <li>删除了1.4版本中添加的一部分歌曲</li>
+                        <li>优化了更改图标位置的体验</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.6（01~03）</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>让桌面图标可以自由改变位置</li>
+                        <li>修复已知问题</li>
+                        <li>更新内容大部分图标</li>
+                        <li>修改了部分细节</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.5</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>添加了HighFC OS 的原生背景</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.4</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>新增2首歌曲</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-card site-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-time"></i> 版本 1.3（01~03）</div>
+                <div class="layui-card-body">
+                    <ul class="log-list">
+                        <li>继承了HighFC OS 4.14的大部分功能</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </nav>
-</aside>
-
-<button class="menu-toggle" id="menu-toggle">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</button>
-
-<div class="changelog-container">
-    <div class="changelog-header">
-        <h1><i class="fas fa-history"></i> Win OS 更新日志</h1>
-        <p>更详细的发展史</p>
+        <footer class="site-footer">© 2026-现在 wmp666</footer>
     </div>
 
-    <div class="version-section">
-        <h2 class="version-title">版本 1.16</h2>
-        <div class="version-content">
-            <p>修复浏览器画面无法关闭</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.15</h2>
-        <div class="version-content">
-            <p>桌面升级</p>
-            <p>导入应用优化</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.14</h2>
-        <div class="version-content">
-            <p>改进了导入应用的体验</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.13</h2>
-        <div class="version-content">
-            <p>新增4张壁纸（来源于HighFC OS）</p>
-            <p>改进了部分代码，更易于管理</p>
-            <p>新增状态栏</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.12</h2>
-        <div class="version-content">
-            <p>修改了系统名</p>
-            <p>修改了加载界面</p>
-            <p>加入了错误应用名删除功能</p>
-            <p>修复了部分功能</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.11</h2>
-        <div class="version-content">
-            <p>修复已知问题</p>
-            <p>更换了信息显示界面的背景</p>
-            <p>优化了代码</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.10</h2>
-        <div class="version-content">
-            <p>为了让代码方便管理，同时提高自由度，优化了"菜单"角色中的代码</p>
-            <p>根据 HighFC OS 6.73Dev Plus 的新增内容，添加了应用导入功能</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.9（01）</h2>
-        <div class="version-content">
-            <p>更换了加载动画</p>
-            <p>加快了重启速度</p>
-            <p>统一了窗口的大标题样式</p>
-            <p>更新了系统栏的图标</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.8</h2>
-        <div class="version-content">
-            <p>给时间界面加入了日期</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.7（01）</h2>
-        <div class="version-content">
-            <p>根据HighFC OS 5.67AI Plus 的新增内容，添加了应用商店</p>
-            <p>加入重启按钮</p>
-            <p>删除了1.4版本中添加的一部分歌曲</p>
-            <p>优化了更改图标位置的体验</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.6（01~03）</h2>
-        <div class="version-content">
-            <p>让桌面图标可以自由改变位置</p>
-            <p>修复已知问题</p>
-            <p>更新内容大部分图标</p>
-            <p>修改了部分细节</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.5</h2>
-        <div class="version-content">
-            <p>添加了HighFC OS 的原生背景</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.4</h2>
-        <div class="version-content">
-            <p>新增2首歌曲</p>
-        </div>
-    </div>
-
-    <div class="version-section">
-        <h2 class="version-title">版本 1.3（01~03）</h2>
-        <div class="version-content">
-            <p>继承了HighFC OS 4.14的大部分功能</p>
-        </div>
-    </div>
 </div>
 
-<script src="../sidebar.js"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../script.js"></script>
+<script>
+    layui.use(['element', 'layer', 'form'], function () {});
+</script>
 </body>
 </html>

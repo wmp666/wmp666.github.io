@@ -7,13 +7,9 @@
 
     var EMAIL = '2134868121@qq.com';
 
-    /** 访问码 -> 目标页（原样保留，不要改动路由） */
+    /** 访问码 -> 目标页 */
     var ACCESS_ROUTES = {
         '260328081011': 'game/askQuestion.html',
-        '21090223': 'birthday/xhc.html',
-        '25081011': 'birthday/lcl.html',
-        '15090129': 'birthday/yht.html',
-        '24090624': 'birthday/xtq.html'
     };
 
     /* ------------------------------------------------------------------ */
@@ -300,58 +296,6 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /* URL 参数兼容                                                        */
-    /* ------------------------------------------------------------------ */
-
-    function currentMatches(target) {
-        var path = String(window.location.pathname || '').toLowerCase().replace(/\/+$/, '');
-        var want = String(target || '').toLowerCase();
-        if (!want) return false;
-        if (want === 'index.html') {
-            return path === '' || /(^|\/)index\.html$/.test(path);
-        }
-        return path.length >= want.length && path.slice(-want.length) === want;
-    }
-
-    function cleanQuery() {
-        try {
-            if (window.history && typeof window.history.replaceState === 'function') {
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        } catch (e) {
-            /* 忽略：部分环境禁止 replaceState */
-        }
-    }
-
-    function handlePageNavigation() {
-        var params;
-        try {
-            params = new URLSearchParams(window.location.search);
-        } catch (e) {
-            return;
-        }
-        var page = params.get('page');
-        if (!page) return;
-
-        var targets = { home: 'index.html', projects: 'page/projects.html' };
-        var target = Object.prototype.hasOwnProperty.call(targets, page) ? targets[page] : null;
-
-        if (page === 'secret') {
-            cleanQuery();
-            var secretLink = byId('secret-link');
-            if (secretLink) secretLink.click();
-            return;
-        }
-
-        if (target && !currentMatches(target)) {
-            window.location.replace(target);
-            return;
-        }
-
-        cleanQuery();
-    }
-
-    /* ------------------------------------------------------------------ */
     /* 启动                                                                */
     /* ------------------------------------------------------------------ */
 
@@ -376,8 +320,6 @@
         fadeIn();
         initNavbar();
         initHeaderActions();
-        isAuthorBir();
-        handlePageNavigation();
     }
 
     if (document.readyState === 'loading') {
@@ -385,8 +327,4 @@
     } else {
         start();
     }
-
-    // 供 HTML 内联调用 / 旧页面调用
-    window.isAuthorBir = isAuthorBir;
-    window.handlePageNavigation = handlePageNavigation;
 })();
